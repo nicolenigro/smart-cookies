@@ -83,9 +83,6 @@ import os
 import random
 import ingredient_and_recipe as food
 
-WORD_EMBED_VALS = np.load('ingred_word_emb.npy', allow_pickle=True).item()
-INGRED_CATEGORIES = np.load('ingred_categories.npy', allow_pickle=True).item()
-INGREDIENT_LIST = sorted(WORD_EMBED_VALS.keys())
 ESSENTIAL_INGREDIENTS = ["sugar", "butter", "flour", "eggs", "baking soda", "baking powder", "salt"]
 
 class Ingredient:
@@ -155,43 +152,6 @@ class Ingredient:
             self.quantity (float): the quantity of the ingredient
         """
         return self.quantity
-    
-    def similarity(self, n2):
-        """Returns the similarity between two ingredients based on our data."""
-        v1 = WORD_EMBED_VALS[self.name]
-        v2 = WORD_EMBED_VALS[n2]
-        return np.dot(v1, v2)
-
-    def pairing(self, threshold, cat=None):
-        """
-        Describes what flavors are similar to the specified ingredient based on
-        a similarity threshold and an optional category to which the flavors
-        belong.
-        """
-        ingr = self.name
-        pairings = {}
-        ilist = list(set(INGREDIENT_LIST) - set([ingr]))
-        for i in ilist:
-            if similarity(ingr, i) >= threshold:
-                if cat is not None:
-                    if i in INGRED_CATEGORIES:
-                        if INGRED_CATEGORIES[i] == cat:
-                            pairings[i] = similarity(ingr, i)
-                else:
-                    pairings[i] = similarity(ingr, i)
-        for key, value in sorted(pairings.items(), key=lambda kv: (kv[1],kv[0]), \
-        reverse=True):
-            print(key, value)
-
-    def request_pairing(self, threshold, cat=None):
-        """Displays a specific pairing to the user in a readable way."""
-        ingr = self.name
-        if cat:
-            print("\nWhat pairs well with " + ingr + " that is a " + cat + "?")
-            pairing(ingr, threshold, cat)
-        else:
-            print("\nWhat pairs well with " + ingr + "?")
-            pairing(ingr, threshold)
 
 
 class Recipe:
@@ -400,7 +360,7 @@ class Recipe:
         output += "\nInstructions"
         output += self.instructions
         return output
-        
+
 
 class Generator: 
     def __init__(self):
