@@ -2,11 +2,11 @@
 PQ2: Smart Cookies
 CSCI 3725
 Team OOG: Ahmed Hameed, Adrienne Miller, Nicole Nigro
-Version Date: 3/7/21
+Version Date: 3/8/21
 
 Description: This system generates cookie recipes.
 
-Dependencies: numpy
+Dependencies: glob, numpy, os, random
 """
 
 """
@@ -25,7 +25,6 @@ Meetings:
         - Want compound ingredients like "brown sugar" to be read in as an essential ingredient (use .contains())
     If there is still time left over then:
     - 
-
 
 Outline
 -Take Ingredient and Recipe classes from PQ1
@@ -78,16 +77,19 @@ randomly select the first mix in
 decide the future mix ins depending on flavor pairing
 """
 
+import glob
 import numpy as np
+import os
+import random
+import ingredient_and_recipe as food
 
 WORD_EMBED_VALS = np.load('ingred_word_emb.npy', allow_pickle=True).item()
 INGRED_CATEGORIES = np.load('ingred_categories.npy', allow_pickle=True).item()
 INGREDIENT_LIST = sorted(WORD_EMBED_VALS.keys())
 ESSENTIAL_INGREDIENTS = ["sugar", "butter", "flour", "eggs", "baking soda", "baking powder", "salt"]
 
-
 class Ingredient:
-    def __init__(self, name, unit, quantity, essential=False):
+    def __init__(self, name, quantity, unit="grams", essential=False):
         """
         Initializes an ingredient with a name and a quantity.
         Args:
@@ -111,7 +113,7 @@ class Ingredient:
             None
         """
         for item in ESSENTIAL_INGREDIENTS:
-            if self.name.contains(item):
+            if (item in self.name):
                 self.essential = True
         
     def set_name(self, new_name):
@@ -357,7 +359,7 @@ class Recipe:
             if not ingredient.essential: 
                 non_essentials.append(ingredient)
                 
-        name_ingredient = np.random.choice(non_essentials).
+        name_ingredient = np.random.choice(non_essentials)
         
         #url = f"https://describingwords.io/for/{name_ingredient}
         # name = adjective + ingredient + cookies
@@ -394,8 +396,11 @@ class Recipe:
         output = ""
         for item in self.ingredients:
             output += item.get_name() + " " + (str)(item.get_quantity()) + "\n"
+        
+        output += "\nInstructions"
+        output += self.instructions
         return output
-
+        
 
 class Generator: 
     def __init__(self):
@@ -425,25 +430,26 @@ class Generator:
             
             input_string = ""
             for line in f.readlines(): # add each ingredient line in file to recipe
-                split_line = line.rstrip().split(" grams ") # split line into list of form [quantity, ingredient]
-                ingredient_name = split_line[1]
-                ingredient_quantity = round(float(split_line[0]), 2)
-                ingredient = Ingredient(name=ingredient_name,quantity=ingredient_quantity)
-                ingredients.append(ingredient)
+                if ("grams" in line):
+                    split_line = line.rstrip().split(" grams ") # split line into list of form [quantity, ingredient]
+                    ingredient_name = split_line[1]
+                    ingredient_quantity = round(float(split_line[0]), 2)
+                    ingredient = food.Ingredient(name=ingredient_name,quantity=ingredient_quantity)
+                    ingredients.append(ingredient)
                 input_string += line
 
                 # add to list of all ingredients in example file set
                 if ingredient_name not in self.ingredient_names:
                     self.ingredient_names.append(ingredient_name)
 
-            split_input = file_string.split("Instructions")
+            split_input = input_string.split("Instructions")
             instructions = split_input[1]
 
-            recipe = Recipe(name=filename, ingredients=ingredients, instructions=instructions) #create recipe with all ingredients in a file
+            recipe = food.Recipe(name=filename, ingredients=ingredients, instructions=instructions) #create recipe with all ingredients in a file
 
             # combine duplicate ingredients and normalize recipe to 100 oz
-            recipe.combine_duplicates()
-            recipe.normalize()
+            #recipe.combine_duplicates()
+            #recipe.normalize()
 
             # save recipe to the list of recipes
             self.recipes.append(recipe)
@@ -574,12 +580,11 @@ class Generator:
 def main():
     g = Generator()
     g.read_files("input/*.txt")
-    recipes = g.generate(num_generations=10, mutation_prob=0.5) #run with 10 generations--feel free to change
-    recipe_num = 1
+    recipes = g.recipes
+
     for recipe in recipes: 
-        recipe.name = f"recipe{recipe_num}.txt"
-        recipe.recipe_export("output")
-        recipe_num+=1
+        print()
+        print(recipe)
 
 if __name__ == "__main__":
     main()
