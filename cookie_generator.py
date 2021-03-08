@@ -12,8 +12,19 @@ Dependencies: numpy
 """
 Week of March 8th --> 
 - naming function in Recipe class
-- updating readings in files 
-- mutations: incooo
+- updating readings in files [X]
+- mutations: incorporate flavor pairings
+    - mutations for base ingredients: 
+- crossover --> only do on non essentials 
+- update functions in recipe (add_ingredient, remove_ingredient)
+- fitness function is average compatability of nonessential ingredients 
+
+Meetings:
+- Nicole and Ahmed on March 8th, 1:30-2:30 PM, to work on 
+    - sorting of Ingredients in Recipe based on essential and non-essential ingredients.
+        - Want compound ingredients like "brown sugar" to be read in as an essential ingredient (use .contains())
+    If there is still time left over then:
+    - 
 
 
 Outline
@@ -33,6 +44,12 @@ Outline
         -Origin attribute: if Recipe has x Ingredients, then it's ____ origin
             *incorporate to recipe title
         -Normalize (take into account yield)
+        --> We could have a mutation function for each TYPE of base ingredient, keeping amounts constant
+                For example:
+                        * mutate_flour(flour_name) - swaps the given flour ingredient for another type of flour
+                                                    all purpose flour --> whole wheat flour
+                        * mutate_sugar(sugar) - swaps the sugar
+                        * mutate_shortening(short) - swaps the shortening
 -Generation
     -Dictionary? of ingredients and average amount <- just for essential ingredients
         *check how far the amount is from the average
@@ -84,6 +101,19 @@ class Ingredient:
         self.quantity = abs(quantity)
         self.essential = essential
 
+    def mark_essential_ingredient(self):
+        """
+        Uses the essential ingredients list to marks which Ingredients are considered "essential" 
+        for a cookie recipe
+        Args:
+            None
+        Return:
+            None
+        """
+        for item in ESSENTIAL_INGREDIENTS:
+            if self.name.contains(item):
+                self.essential = True
+        
     def set_name(self, new_name):
         """
         Sets the name of ingredient to new_name.
@@ -163,28 +193,35 @@ class Ingredient:
 
 
 class Recipe:
-    def __init__(self, name, ingredients):
+    def __init__(self, name, ingredients, instructions):
         """
         Initializes a recipe with a name and a list of Ingredients that make up the recipe.
         Args:
             name (str): The name of the recipe (make creative later on) 
             ingredients (list): List of Ingredient objects
+            instructions (str): 
         """
         self.name = name
         self.ingredients = ingredients
+        self.instructions = instructions
         self.base_ingredients = []
         self.non_essential_ingredients = []
         self.sort_ingredients()
     
     def sort_ingredients(self): 
         """
+        Goes through ingredients list and marks which ingredients are essential and which ones are mix-ins.
+        Args:
+            None
+        Return:
+            None 
         """
-        
         for ingredient in self.ingredients: 
+            ingredient.mark_essential_ingredient()
             if ingredient.essential: 
                 self.base_ingredients.append(ingredient)
             else:
-                self.non_esential_ingredients.append(ingredient)
+                self.non_essential_ingredients.append(ingredient)
 
     def normalize(self, normal_value):
         """
@@ -342,7 +379,8 @@ class Recipe:
             else:
                 line = f"{round(ingredient.quantity,2)} grams {ingredient.name} \n"
                 f.write(line)
-        #WRITE INSTRUCTIONS
+        f.write("Instructions")
+        f.write(self.instructions)
         f.close()
 
     def __str__(self):
@@ -371,13 +409,6 @@ class Generator:
         self.recipes = []
         self.new_recipe_count = 1
 
-    def mark_essential_ingredients(self, ingredients):
-        """
-        Given a list of Ingredients, marks which Ingredients are considered "essential" for a cookie recipe
-        Args:
-            ingredients (list) - The list of Ingredient objects from a Recipe
-        """
-
     def read_files(self, input_directory):
         """
         Opens the files in the input folder, reading each file line by line to create Ingredient
@@ -392,19 +423,23 @@ class Generator:
             ingredients = [] # intialize list of all ingredients in current recipe 
             f = open(os.path.join(filename))
             
+            input_string = ""
             for line in f.readlines(): # add each ingredient line in file to recipe
-        
-                split_line = line.rstrip().split(" grams ") # split line into list of form [quanitiy, ingredient]
+                split_line = line.rstrip().split(" grams ") # split line into list of form [quantity, ingredient]
                 ingredient_name = split_line[1]
                 ingredient_quantity = round(float(split_line[0]), 2)
                 ingredient = Ingredient(name=ingredient_name,quantity=ingredient_quantity)
                 ingredients.append(ingredient)
+                input_string += line
 
                 # add to list of all ingredients in example file set
                 if ingredient_name not in self.ingredient_names:
                     self.ingredient_names.append(ingredient_name)
 
-            recipe = Recipe(name=filename, ingredients=ingredients) #create recipe with all ingredients in a file
+            split_input = file_string.split("Instructions")
+            instructions = split_input[1]
+
+            recipe = Recipe(name=filename, ingredients=ingredients, instructions=instructions) #create recipe with all ingredients in a file
 
             # combine duplicate ingredients and normalize recipe to 100 oz
             recipe.combine_duplicates()
