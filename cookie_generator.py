@@ -15,7 +15,7 @@ Week of March 8th -->
 - updating readings in files [X]
 - mutations: incorporate flavor pairings
     - mutations for base ingredients: 
-- crossover --> only do on non essentials 
+- crossover --> only do on non essentials[]
 - update functions in recipe (add_ingredient, remove_ingredient)
 - fitness function is average compatability of nonessential ingredients 
 
