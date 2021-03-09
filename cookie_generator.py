@@ -13,10 +13,9 @@ Dependencies: glob, numpy, os, random
 Week of March 8th --> 
 - naming function in Recipe class
 - updating readings in files [X]
-- mutations: incorporate flavor pairings
-    - mutations for base ingredients: 
-- crossover --> only do on non essentials[]
-- update functions in recipe (add_ingredient, remove_ingredient)
+- mutations: incorporate flavor pairings[X]
+    - need to fine tune this --> we are getting super weird stuff 
+- crossover --> only do on non essentials[X]
 - fitness function is average compatability of nonessential ingredients 
 
 Meetings:
@@ -81,7 +80,7 @@ import glob
 import numpy as np
 import os
 import random
-from flavor_pairing import similarity, pairing
+from flavor_pairing import similarity, pairing, INGREDIENT_LIST
 
 ESSENTIAL_INGREDIENTS = ["sugar", "butter", "flour", "egg", "eggs", "yolk", "baking soda", "baking powder", "salt"]
 
@@ -180,7 +179,6 @@ class Recipe:
             None
         """
         self.ingredients.remove(ingredient_getting_deleted)
-
     
     def combine_duplicates(self): 
         """
@@ -210,14 +208,11 @@ class Recipe:
              new_ingredients.append(new_ingredient)
 
         self.ingredients = new_ingredients
-
-
         
     def name_recipe(self):
         """
         Name a recipe with an adjective, ingredient name, cookies
         """
-
         # select ingredient randomly from nonessential ingredient list 
 
         non_essentials = []
@@ -261,10 +256,10 @@ class Recipe:
         """
         output = ""
         for item in self.ingredients:
-            output += item.get_name() + " " + (str)(item.get_quantity()) + "\n"
+            output += item.name + " " + (str)(item.quantity) + "\n"
         
         output += "\nInstructions"
-        output += self.instructions
+        #output += self.instructions
         return output
 
 
@@ -333,18 +328,30 @@ class Generator:
         # calculate fitness of each recipe 
         recipes_fitness = [recipe.fitness() for recipe in self.recipes]
         parent1, parent2 = random.choices(population=self.recipes, weights=recipes_fitness, k=2)
-    
-        # make sure that recipes always have at least 2 ingredients
-        pivot_1 = random.randint(1, parent1.fitness())
-        pivot_2 = random.randint(0, parent2.fitness()-1)
+        
+        #crossover the non-essentials/mix ins of both parent recipes and combine w/ parent1 essentials
+        non_essentials_parent1 = []
+        essentials_parent1 = []
+        for ingredient in parent1.ingredients: 
+            if ingredient.essential:
+                essentials_parent1.append(ingredient)
+            else: 
+                non_essentials_parent1.append(ingredient)
+        
+        non_essentials_parent2 = []
+        for ingredient in parent2.ingredients: 
+            if not ingredient.essential:
+                non_essentials_parent2.append(ingredient)
+        
+        pivot_1 = random.randint(0, len(non_essentials_parent1)-1)
+        pivot_2 = random.randint(0, len(non_essentials_parent2)-1)
 
         # create subset of parent recipes that will be used in child
-        first_subgroup_recipe1 = parent1.ingredients[0:pivot_1]
-        second_subgroup_recipe2 = parent2.ingredients[pivot_2:]
-
-        # create child recipe object
+        subgroup_recipe1 = non_essentials_parent1[1:pivot_1]
+        subgroup_recipe2 = non_essentials_parent2[pivot_2:]        # create child recipe object
+        
         child_name = "recipe" + str(self.new_recipe_count) + ".txt"
-        child_ingredients = first_subgroup_recipe1 + second_subgroup_recipe2
+        child_ingredients = essentials_parent1 + subgroup_recipe1 + subgroup_recipe2
         child = Recipe(name=child_name, ingredients=child_ingredients, instructions=parent1.instructions)
         child.combine_duplicates()
         
@@ -372,21 +379,34 @@ class Generator:
         mutation_types = ["add", "delete"]
         current_mutation = random.choice(mutation_types)
         non_essentials = []
+
+        default_mix_ins = INGREDIENT_LIST
+
         for ingredient in recipe.ingredients:
             if not ingredient.essential: 
                 non_essentials.append(ingredient)
        
         if (current_mutation == "add"):
-            if len(non_essentials) == 0: 
-                # select entirely random ingredient
-                print("whoosod")
-            else: 
-                reference_ingredient = np.random.choice(non_essentials)
-                good_pairings = pairing(reference_ingredient.name, 0.65)
-                new_ingredient = random.choices(good_pairings.keys(), weights=good_pairings.items())
+            random_order = random.choices(non_essentials, k=len(non_essentials)) # randomly ordered list of nonessentials
+            found_ingredient = False
 
-            new_ingredient_amount = random.uniform(1, 50)
-            recipe.add_ingredient(Ingredient(new_ingredient_name, new_ingredient_amount))
+            # loop through nonessential ingredients until you find one that works
+            for i in range(len(random_order)): 
+                reference_ingredient = random_order[i]
+                try: 
+                    good_pairings = pairing(reference_ingredient.name, 0.60)
+                    new_ingredient = random.choices(good_pairings.keys(), weights=good_pairings.items())
+                except: 
+                    continue
+                found_ingredient = True 
+                break 
+
+            if not found_ingredient: 
+                new_ingredient = random.choice(default_mix_ins)
+               
+            new_ingredient_amount = random.uniform(1, 50) #FIX THIS
+            recipe.add_ingredient(Ingredient(new_ingredient, new_ingredient_amount))
+
         elif (current_mutation == "delete"):
             # select random ingredient to remove from recipe 
             ingredient_to_delete = random.choice(recipe.ingredients)
@@ -444,12 +464,11 @@ class Generator:
 def main():
     g = Generator()
     g.read_files("input/*.txt")
-    recipes = g.recipes
 
-    #for recipe in recipes: 
-       # print()
-       # print(recipe)
-    g.generate(10, 0.5)
+    recipes = g.generate(10, 0.8)
+
+    for recipe in recipes:
+        print(recipe)
 
 if __name__ == "__main__":
     main()

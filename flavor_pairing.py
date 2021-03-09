@@ -41,7 +41,6 @@ def pairing(ingr, threshold, cat=None):
    # for key, value in sorted(pairings.items(), key=lambda kv: (kv[1],kv[0]), \
    # reverse=True):
       #  print(key, value)
-    print(pairings)
     return pairings
 
 
@@ -62,11 +61,13 @@ def main():
     #request_pairing("green tea", 0.6, "fruit")
     #request_pairing("coffee", 0.45)
 
-    pairing("vanilla", 0.55)
-    file_ = np.load("ingred_categories.npy", allow_pickle=True).item().keys()
-    print(file_)
-    output_path = "test.txt"
-    np.savetxt(output_path, file_) 
+    #spice, nut
+
+    print(pairing("vanilla", 0.35))
+    #file_ = np.load("ingred_categories.npy", allow_pickle=True).item().keys()
+    #print(file_)
+    #output_path = "test.txt"
+    #np.savetxt(output_path, file_) 
 
 if __name__ == "__main__":
     main()
