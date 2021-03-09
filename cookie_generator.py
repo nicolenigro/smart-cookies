@@ -81,9 +81,9 @@ import glob
 import numpy as np
 import os
 import random
-import ingredient_and_recipe as food
+from flavor_pairing import similarity, pairing
 
-ESSENTIAL_INGREDIENTS = ["sugar", "butter", "flour", "eggs", "baking soda", "baking powder", "salt"]
+ESSENTIAL_INGREDIENTS = ["sugar", "butter", "flour", "egg", "eggs", "yolk", "baking soda", "baking powder", "salt"]
 
 class Ingredient:
     def __init__(self, name, quantity, unit="grams", essential=False):
@@ -99,6 +99,7 @@ class Ingredient:
         self.unit = unit
         self.quantity = abs(quantity)
         self.essential = essential
+        self.mark_essential_ingredient()
 
     def mark_essential_ingredient(self):
         """
@@ -112,46 +113,16 @@ class Ingredient:
         for item in ESSENTIAL_INGREDIENTS:
             if (item in self.name):
                 self.essential = True
-        
-    def set_name(self, new_name):
-        """
-        Sets the name of ingredient to new_name.
-        Args:
-            new_name (str): the new name for the ingredient
-        Return:
-            None
-        """
-        self.name = new_name
-    
-    def get_name(self):
-        """
-        Gets the name of the current ingredient.
-        Args: 
-            None
-        Return:
-            self.name (str): the name of the ingredient
-        """
-        return self.name    
 
-    def set_quantity(self, new_quantity):
+    def __str__(self):
         """
-        Sets the quantity of an ingredient.
-        Args:
-            new_quantity (float): the new quantity of the ingredient
-        Return:
-            None
-        """
-        self.quantity = new_quantity
-        
-    def get_quantity(self):
-        """
-        Returns the quantity of the current ingredient.
+        Method for printing out an Ingredient object 
         Args:
             None
         Return:
-            self.quantity (float): the quantity of the ingredient
+            output (str): The string output representing a Ingredient object
         """
-        return self.quantity
+        return f"{self.name} {self.quantity} {self.unit}"
 
 
 class Recipe:
@@ -166,53 +137,7 @@ class Recipe:
         self.name = name
         self.ingredients = ingredients
         self.instructions = instructions
-        self.base_ingredients = []
-        self.non_essential_ingredients = []
-        self.sort_ingredients()
-    
-    def sort_ingredients(self): 
-        """
-        Goes through ingredients list and marks which ingredients are essential and which ones are mix-ins.
-        Args:
-            None
-        Return:
-            None 
-        """
-        for ingredient in self.ingredients: 
-            ingredient.mark_essential_ingredient()
-            if ingredient.essential: 
-                self.base_ingredients.append(ingredient)
-            else:
-                self.non_essential_ingredients.append(ingredient)
-
-    def normalize(self, normal_value):
-        """
-        Normalizes the ingredient quantities in recipe to add up to normal_value. If quantities are not adding
-        up to the given normal value, changes the ingredient amounts with a calculation.
-        Args:
-            normal_value (int) - The value that ingredient amounts will be normalized to. Units may vary.
-        Return:
-            None
-        """
-        total = 0
-        
-        #calculate the total oz that the recipe currently sums up to
-        for item in self.ingredients:
-            amount = item.get_quantity()
-            total += amount
-        
-        if (total == normal_value):
-            return
-        else: 
-            for i in range(len(self.ingredients)):
-                item = self.ingredients[i]
-                amount = item.get_quantity()
-                # normalization occurs by taking proportion of quantity:total and multiplying it by a
-                # normalization value
-                normalized = (amount/total)*normal_value
-                item.set_quantity(normalized)
-                self.ingredients[i] = item
-    
+  
     def fitness(self):
         """
         Calculates the fitness of the current recipe by reading through the list of ingredients and
@@ -227,7 +152,7 @@ class Recipe:
         
         previously_seen_ingredients = [] #list of ingredient names (str)
         for item in self.ingredients:
-            ing_name = item.get_name
+            ing_name = item.name
             if (ing_name in previously_seen_ingredients):
                 pass
             else:
@@ -235,28 +160,6 @@ class Recipe:
                 fitness_score += 1
         
         return fitness_score
-
-    def reset_ingredient_amount(self, index):
-        """
-        Resets the ingredient amount to a randomly selected value between 0.5 and 100. 
-        Args:
-            index (int): The index of the ingredient that whose quantity we want to reset
-        Return:
-            None
-        """
-        new_amount = random.uniform(1, 50)
-        self.ingredients[index].set_quantity(new_amount)
-
-    def set_ingredient_name(self, index, new_name):
-        """
-        Sets the recipe ingredient at the given index to new_name.
-        Args:
-            index (int): The index of the ingredient whose name we want to overwrite
-            new_name (str): The new name of ingredient
-        Return:
-            None
-        """
-        self.ingredients[index].set_name(new_name)
 
     def add_ingredient(self, new_ingredient):
         """
@@ -277,6 +180,7 @@ class Recipe:
             None
         """
         self.ingredients.remove(ingredient_getting_deleted)
+
     
     def combine_duplicates(self): 
         """
@@ -306,7 +210,9 @@ class Recipe:
              new_ingredients.append(new_ingredient)
 
         self.ingredients = new_ingredients
-    
+
+
+        
     def name_recipe(self):
         """
         Name a recipe with an adjective, ingredient name, cookies
@@ -394,7 +300,7 @@ class Generator:
                     split_line = line.rstrip().split(" grams ") # split line into list of form [quantity, ingredient]
                     ingredient_name = split_line[1]
                     ingredient_quantity = round(float(split_line[0]), 2)
-                    ingredient = food.Ingredient(name=ingredient_name,quantity=ingredient_quantity)
+                    ingredient = Ingredient(name=ingredient_name,quantity=ingredient_quantity)
                     ingredients.append(ingredient)
                 input_string += line
 
@@ -405,7 +311,7 @@ class Generator:
             split_input = input_string.split("Instructions")
             instructions = split_input[1]
 
-            recipe = food.Recipe(name=filename, ingredients=ingredients, instructions=instructions) #create recipe with all ingredients in a file
+            recipe = Recipe(name=filename, ingredients=ingredients, instructions=instructions) #create recipe with all ingredients in a file
 
             # combine duplicate ingredients and normalize recipe to 100 oz
             #recipe.combine_duplicates()
@@ -439,9 +345,8 @@ class Generator:
         # create child recipe object
         child_name = "recipe" + str(self.new_recipe_count) + ".txt"
         child_ingredients = first_subgroup_recipe1 + second_subgroup_recipe2
-        child = Recipe(name=child_name, ingredients=child_ingredients)
+        child = Recipe(name=child_name, ingredients=child_ingredients, instructions=parent1.instructions)
         child.combine_duplicates()
-        child.normalize()
         
         self.new_recipe_count += 1
         
@@ -464,21 +369,22 @@ class Generator:
             return recipe
 
         # select random mutation type
-        mutation_types = ["change_amount", "switch_ingredients", "add", "delete"]
+        mutation_types = ["add", "delete"]
         current_mutation = random.choice(mutation_types)
-        
-        if (current_mutation == "change_amount"):
-            # select random index of ingredient to change amount of
-            current_index = random.randint(0, len(recipe.ingredients)-1)
-            recipe.reset_ingredient_amount(current_index)
-        elif (current_mutation == "switch_ingredients"):
-            # select random index to change ingredient and random ingredient to change to
-            current_index = random.randint(0, len(recipe.ingredients)-1)
-            new_name = random.choice(self.ingredient_names)
-            recipe.set_ingredient_name(current_index, new_name)
-        elif (current_mutation == "add"):
-            # select random ingredient and quantity to add to recipe 
-            new_ingredient_name = random.choice(self.ingredient_names)
+        non_essentials = []
+        for ingredient in recipe.ingredients:
+            if not ingredient.essential: 
+                non_essentials.append(ingredient)
+       
+        if (current_mutation == "add"):
+            if len(non_essentials) == 0: 
+                # select entirely random ingredient
+                print("whoosod")
+            else: 
+                reference_ingredient = np.random.choice(non_essentials)
+                good_pairings = pairing(reference_ingredient.name, 0.65)
+                new_ingredient = random.choices(good_pairings.keys(), weights=good_pairings.items())
+
             new_ingredient_amount = random.uniform(1, 50)
             recipe.add_ingredient(Ingredient(new_ingredient_name, new_ingredient_amount))
         elif (current_mutation == "delete"):
@@ -487,7 +393,6 @@ class Generator:
             recipe.delete_ingredient(ingredient_to_delete)
         
         recipe.combine_duplicates()
-        recipe.normalize()
         return recipe 
     
     def generate_population(self, mutation_prob): 
@@ -509,7 +414,6 @@ class Generator:
         for i in range(num_children): 
             new_recipe = self.crossover()
             mutated_recipe = self.mutation(recipe=new_recipe, prob_of_mutation=mutation_prob)
-            mutated_recipe.normalize()
             next_generation.append(mutated_recipe)
 
         # sort previous and next generation by their fitness
@@ -542,9 +446,10 @@ def main():
     g.read_files("input/*.txt")
     recipes = g.recipes
 
-    for recipe in recipes: 
-        print()
-        print(recipe)
+    #for recipe in recipes: 
+       # print()
+       # print(recipe)
+    g.generate(10, 0.5)
 
 if __name__ == "__main__":
     main()

@@ -9,6 +9,7 @@ large datasets as part of your design process.
 """
 
 import numpy as np
+import os
 
 WORD_EMBED_VALS = np.load('ingred_word_emb.npy', allow_pickle=True).item()
 INGRED_CATEGORIES = np.load('ingred_categories.npy', allow_pickle=True).item()
@@ -37,9 +38,11 @@ def pairing(ingr, threshold, cat=None):
                         pairings[i] = similarity(ingr, i)
             else:
                 pairings[i] = similarity(ingr, i)
-    for key, value in sorted(pairings.items(), key=lambda kv: (kv[1],kv[0]), \
-    reverse=True):
-        print(key, value)
+   # for key, value in sorted(pairings.items(), key=lambda kv: (kv[1],kv[0]), \
+   # reverse=True):
+      #  print(key, value)
+    print(pairings)
+    return pairings
 
 
 def request_pairing(ingr, threshold, cat=None):
@@ -53,13 +56,17 @@ def request_pairing(ingr, threshold, cat=None):
 
 
 def main():
-    print("* * * Here are some examples of searching for Western flavor \
-pairings: * * *")
-    request_pairing("orange", 0.1, "herb")
-    request_pairing("chocolate", 0.1, "spice")
-    request_pairing("green tea", 0.6, "fruit")
-    request_pairing("coffee", 0.45)
+    #print("* * * Here are some examples of searching for Western flavor pairings: * * *")
+    #request_pairing("orange", 0.1, "herb")
+    #request_pairing("chocolate", 0.1, "spice")
+    #request_pairing("green tea", 0.6, "fruit")
+    #request_pairing("coffee", 0.45)
 
+    pairing("vanilla", 0.55)
+    file_ = np.load("ingred_categories.npy", allow_pickle=True).item().keys()
+    print(file_)
+    output_path = "test.txt"
+    np.savetxt(output_path, file_) 
 
 if __name__ == "__main__":
     main()
