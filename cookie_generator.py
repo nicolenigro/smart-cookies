@@ -340,7 +340,8 @@ class Recipe:
             else:
                 line = f"{round(ingredient.quantity,2)} grams {ingredient.name} \n"
                 f.write(line)
-        f.write("Instructions \n")
+        f.write("\n")
+        f.write("Instructions")
         f.write(self.instructions)
         f.close()
 
