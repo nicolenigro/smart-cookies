@@ -38,9 +38,9 @@ def pairing(ingr, threshold, cat=None):
                         pairings[i] = similarity(ingr, i)
             else:
                 pairings[i] = similarity(ingr, i)
-   # for key, value in sorted(pairings.items(), key=lambda kv: (kv[1],kv[0]), \
-   # reverse=True):
-      #  print(key, value)
+    #for key, value in sorted(pairings.items(), key=lambda kv: (kv[1],kv[0]), \
+    #reverse=True):
+        #print(key, value)
     return pairings
 
 
@@ -55,19 +55,14 @@ def request_pairing(ingr, threshold, cat=None):
 
 
 def main():
-    #print("* * * Here are some examples of searching for Western flavor pairings: * * *")
-    #request_pairing("orange", 0.1, "herb")
-    #request_pairing("chocolate", 0.1, "spice")
-    #request_pairing("green tea", 0.6, "fruit")
-    #request_pairing("coffee", 0.45)
-
-    #spice, nut
-
-    print(pairing("vanilla", 0.35))
-    #file_ = np.load("ingred_categories.npy", allow_pickle=True).item().keys()
-    #print(file_)
-    #output_path = "test.txt"
-    #np.savetxt(output_path, file_) 
+    print("* * * Here are some examples of searching for Western flavor pairings: * * *")
+    request_pairing("orange", 0.1, "herb")
+    request_pairing("chocolate", 0.1, "spice")
+    request_pairing("green tea", 0.6, "fruit")
+    request_pairing("coffee", 0.45)
+    #print(pairing("vanilla", 0.35))
+   # print(INGRED_CATEGORIES)
+    print(INGREDIENT_LIST)
 
 if __name__ == "__main__":
     main()

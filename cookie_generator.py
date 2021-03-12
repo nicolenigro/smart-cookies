@@ -2,7 +2,7 @@
 PQ2: Smart Cookies
 CSCI 3725
 Team OOG: Ahmed Hameed, Adrienne Miller, Nicole Nigro
-Version Date: 3/8/21
+Version Date: 3/11/21
 
 Description: This system generates cookie recipes.
 
@@ -86,20 +86,18 @@ TO DO LIST AS OF MARCH 10 --
         will vary
 """
 
-
 import string
 import time
 import glob
 import numpy as np
 import os
 import random
-from flavor_pairing import similarity, pairing, INGREDIENT_LIST
+from flavor_pairing import similarity, pairing
 from bs4 import BeautifulSoup
 import requests
 import json
-ESSENTIAL_INGREDIENTS = ["sugar", "butter", "flour", "egg",
-                         "eggs", "yolk", "baking soda", "baking powder", "salt"]
 
+ESSENTIAL_INGREDIENTS = ["sugar", "butter", "flour", "egg", "eggs", "yolk", "baking soda", "baking powder", "salt"]
 
 class Ingredient:
     def __init__(self, name, quantity, unit="grams", essential=False):
@@ -144,11 +142,12 @@ class Ingredient:
 class Recipe:
     def __init__(self, name, ingredients, instructions):
         """
-        Initializes a recipe with a name and a list of Ingredients that make up the recipe.
+        Initializes a recipe with a name, a list of Ingredients that make up the recipe, and the
+        corresponding instructions.
         Args:
             name (str): The name of the recipe (make creative later on) 
             ingredients (list): List of Ingredient objects
-            instructions (str): 
+            instructions (str): A string with all the baking instructions
         """
         self.name = name
         self.ingredients = ingredients
@@ -304,7 +303,6 @@ class Recipe:
         """
         Name a recipe with an adjective, ingredient name, cookies
         """
-
         non_essentials = self.get_non_essentials()
         # if no non essential ingredients --> recipe is basic
         if len(non_essentials) == 0:
@@ -342,7 +340,7 @@ class Recipe:
             else:
                 line = f"{round(ingredient.quantity,2)} grams {ingredient.name} \n"
                 f.write(line)
-        f.write("Instructions")
+        f.write("Instructions \n")
         f.write(self.instructions)
         f.close()
 
@@ -374,6 +372,8 @@ class Generator:
         self.ingredient_names = []  # all ingredients in population
         self.recipes = []
         self.new_recipe_count = 1
+        self.default_mix_ins = []
+        self.get_default_list()
 
     def read_files(self, input_directory):
         """
@@ -487,36 +487,32 @@ class Generator:
         current_mutation = random.choice(mutation_types)
         non_essentials = []
 
-        default_mix_ins = INGREDIENT_LIST
-
         for ingredient in recipe.ingredients:
             if not ingredient.essential:
                 non_essentials.append(ingredient)
 
         if (current_mutation == "add"):
             # randomly ordered list of nonessentials
-            random_order = random.choices(
-                non_essentials, k=len(non_essentials))
+            random_order = random.choices(non_essentials, k=len(non_essentials))
             found_ingredient = False
 
             # loop through nonessential ingredients until you find one that works
             for i in range(len(random_order)):
                 reference_ingredient = random_order[i]
                 try:
-                    good_pairings = pairing(reference_ingredient.name, 0.60)
-                    new_ingredient = random.choices(
-                        good_pairings.keys(), weights=good_pairings.items())
+                    good_pairings = pairing(reference_ingredient.name, 0.5)
+                    good_ingredients, weights = good_pairings.items()
+                    new_ingredient = random.choices(good_ingredients, weights=weights)
                 except:
                     continue
                 found_ingredient = True
                 break
 
             if not found_ingredient:
-                new_ingredient = random.choice(default_mix_ins)
+                new_ingredient = random.choice(self.default_mix_ins)
 
             new_ingredient_amount = random.uniform(1, 50)  # FIX THIS
-            recipe.add_ingredient(Ingredient(
-                new_ingredient, new_ingredient_amount))
+            recipe.add_ingredient(Ingredient(new_ingredient, new_ingredient_amount))
 
         elif (current_mutation == "delete"):
             # select random ingredient to remove from recipe
@@ -574,7 +570,22 @@ class Generator:
         for i in range(num_generations):
             self.generate_population(mutation_prob)
         return self.recipes
+        
+    def get_default_list(self): 
+        """
+        """ 
+        all_spices = pairing("vanilla", 0.00, cat="spice")
+        all_herbs = pairing("vanilla", 0.00, cat="herb")
+        all_nuts = pairing("vanilla", 0.00, cat="nut/seed/pulse")
 
+        #print(all_spices)
+        #print(all_herbs)
+        #print(all_nuts)
+        
+        self.default_mix_ins += list(all_spices.keys())
+        self.default_mix_ins += list(all_herbs.keys())
+        self.default_mix_ins += list(all_nuts.keys())
+  
 
 def main():
     g = Generator()
@@ -585,7 +596,7 @@ def main():
     for recipe in recipes:
         recipe.name_recipe()
         recipe.recipe_export(output_dir="output")
-        time.sleep(5)
+        time.sleep(2)
 
 
 if __name__ == "__main__":
