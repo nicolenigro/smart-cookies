@@ -20,3 +20,5 @@ We created an inspiring set of cookie recipes using recipes from these sites:
 * https://kirbiecravings.com
 * https://www.kingarthurbaking.com
 * https://www.allrecipes.com
+* https://www.tasteofhome.com
+* https://lilluna.com
