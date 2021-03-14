@@ -1,7 +1,7 @@
 360 grams all-purpose flour
 12 grams baking powder
 18 grams baking soda
-7.8 grams ground cinnamon
+7.8 grams cinnamon
 6 grams salt
 339 grams butter, at room temperature
 297 grams granulated sugar
@@ -9,9 +9,9 @@
 150 grams eggs
 14 grams vanilla
 510 grams semisweet chocolate chips
-267 grams old-fashioned rolled oats
-120 grams unsweetened flake coconut
-228 grams chopped pecans
+267 grams oats
+120 grams coconut
+228 grams pecan
 
 Instructions
 1. Heat oven to 350 degrees.
