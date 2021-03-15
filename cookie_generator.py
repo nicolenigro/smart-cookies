@@ -84,6 +84,29 @@ TO DO LIST AS OF MARCH 10 --
     - (Not urgent): Generate some random recipes based using ingredient names from flavor data set so that
         there are no conflicts in naming. Random recipes will have almost identical base ingredients but mix-ins
         will vary
+
+EVALUATION
+-similarity_fitness() is 1 form of evaluation
+-recipe_uniqueness() is 2nd form of evaluation
+
+Week of 3/15 to do list
+-recipe_uniqueness()
+    *for each ingredient in the recipe, +1 for an ingredient not present in the inspiring set
+    *1/occurnece of an ingredient
+        *cinnamon will have a lower score than matcha
+-calculate_rank() function <- do this Generator
+    *sum of uniqueness and similarity
+    *higher the value, higher the rank
+    *order based on value
+    *for an output of 10 recipes, ranks them #1, #2, #3 ... best recipe
+    *write as final line of recipe (after instructions)
+-fix the instructions to be more inclusive of mix-ins
+    *preheat
+    *dry ingredients
+    *wet ingredients
+    *bake
+-going through inspring set to paraphrase ingredients for numpy 
+-keep instructions from recipe that is being used as base in crossover
 """
 
 import string
@@ -152,29 +175,6 @@ class Recipe:
         self.name = name
         self.ingredients = ingredients
         self.instructions = instructions
-
-    def variety_fitness(self):
-        """
-        Calculates the fitness of the current recipe by reading through the list of ingredients and
-        counting the number of unique ingredients present in that recipe. Essentially, more 
-        ingredients = higher fitness score.
-        Args:
-            None
-        Return:
-            fitness_score (int): the fitness score of a recipe
-        """
-        fitness_score = 0
-
-        previously_seen_ingredients = []  # list of ingredient names (str)
-        for item in self.ingredients:
-            ing_name = item.get_name
-            if (ing_name in previously_seen_ingredients):
-                pass
-            else:
-                previously_seen_ingredients.append(ing_name)
-                fitness_score += 1
-
-        return fitness_score
 
     def similarity_fitness(self):
         """
