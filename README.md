@@ -18,9 +18,9 @@ $ cd smart-cookies
 ```
 5. Install all the necessary packages with the following commands:
 ```
-pip3 install numpy
-pip3 install beautifulsoup4
-pip3 install requests
+$ pip3 install numpy
+$ pip3 install beautifulsoup4
+$ pip3 install requests
 ```
 6. Type and enter the following line into the terminal to run the program.  
 ```
