@@ -396,6 +396,7 @@ class Generator:
                     # split line into list of form [quantity, ingredient]
                     split_line = line.rstrip().split(" grams ")
                     ingredient_name = split_line[1]
+                    print(ingredient_name)
                     ingredient_quantity = round(float(split_line[0]), 2)
                     ingredient = Ingredient(
                         name=ingredient_name, quantity=ingredient_quantity)
@@ -592,7 +593,7 @@ def main():
     g = Generator()
     g.read_files("input/*.txt")
 
-    recipes = g.generate(10, 0.8)
+    recipes = g.generate(1, 0.8)
 
     for recipe in recipes:
         recipe.name_recipe()
