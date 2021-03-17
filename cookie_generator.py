@@ -144,7 +144,7 @@ from bs4 import BeautifulSoup
 import requests
 import json
 
-ESSENTIAL_INGREDIENTS = ["sugar", "butter", "flour", "egg", "eggs", "yolk", "yolks", "baking soda", "baking powder", "salt"]
+ESSENTIAL_INGREDIENTS = ["sugar", "butter", "flour", "egg", "eggs", "yolk", "yolks", "baking soda", "baking powder", "salt", "vanilla", "vegetable oil"]
 
 class Ingredient:
     def __init__(self, name, quantity, unit="grams", essential=False):
