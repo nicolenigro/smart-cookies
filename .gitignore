@@ -1,2 +1,8 @@
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
 # operating system-related files
 *.DS_Store #file properties cache/storage on macOS
