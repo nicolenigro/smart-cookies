@@ -332,7 +332,7 @@ class Recipe:
             None
         """
         output_path = os.path.join(output_dir, self.name)
-        f = open(output_path, "w")
+        f = open(output_path, "w", encoding='utf-8')
         for ingredient in self.ingredients:
             if (round(ingredient.quantity, 2) < 0.01):
                 line = f"{ingredient.quantity} grams {ingredient.name} \n"
@@ -388,7 +388,7 @@ class Generator:
         """
         for filename in glob.glob(input_directory):  # open each example recipe file
             ingredients = []  # intialize list of all ingredients in current recipe
-            f = open(os.path.join(filename))
+            f = open(os.path.join(filename), encoding='utf-8')
 
             input_string = ""
             for line in f.readlines():  # add each ingredient line in file to recipe
