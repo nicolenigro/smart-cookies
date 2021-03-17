@@ -314,7 +314,7 @@ class Recipe:
         # get list of words and associated weights based on occurrenc
         related_words, weights = self.name_recipe_helper(name_ingredient)
         if len(related_words) == 0:
-            adjective = "Uncool"
+            adjective = "Simple"
         else:
             # select adjective based on weighted scores from website
             adjective = ''.join(random.choices(related_words, weights, k=1))
@@ -580,7 +580,6 @@ class Generator:
         self.default_mix_ins += list(all_nuts.keys())
 
         print(self.default_mix_ins)
-    
     
     def recipe_uniqueness(self, recipes): 
         """ 

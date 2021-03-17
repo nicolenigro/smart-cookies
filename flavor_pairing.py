@@ -59,9 +59,9 @@ def main():
     request_pairing("orange", 0.1, "herb")
     request_pairing("chocolate", 0.1, "spice")
     request_pairing("green tea", 0.6, "fruit")
-    request_pairing("coffee", 0.45)
-    #print(pairing("vanilla", 0.35))
-   # print(INGRED_CATEGORIES)
+    request_pairing("zucchini", 0.01)
+    print(pairing("vanilla", 0.35))
+    #print(INGRED_CATEGORIES)
     print(INGREDIENT_LIST)
 
 if __name__ == "__main__":
