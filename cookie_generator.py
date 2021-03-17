@@ -107,6 +107,30 @@ Week of 3/15 to do list
     *bake
 -going through inspring set to paraphrase ingredients for numpy 
 -keep instructions from recipe that is being used as base in crossover
+
+TODO before Presentation:
+    - Add an Evaluation method for the final output recipes (the best recipes produced by the system)
+        * Generation and Evaluation are distinct 
+        * incorporate CC theory from class such as 4P's, SPECS, etc.
+        * compare final recipes to inspiring set?
+        * Maybe do something with the ingredient amounts? Either as a fitness function or a form of evaluation
+            - If a recipe has the same proportion of ingredients as a similar recipe in inspiring set then 
+                it's a better recipe
+    - fix documentation:
+        * spacing
+            - 2 lines between each function
+        * __str__ and __repr__ functions for each class
+        * docstrings for every class and method
+        * .gitignore file
+    - Update instructions in input .txt files using format in Google Doc
+    - Exporting rankings and evaluations to separate 'metrics' file
+        * All in one .txt file where each recipe and its ranking + score are all on one line, see format below
+        * Format: [ranking] [recipe name] [fitness score]/[uniqueness score]
+    - Run evaluation 5 times, and save the output recipes after each run 
+        * Can save the recipes manually or change the code 
+        * 5 different evaluation .txt files in metrics
+    - Choosing best cookie recipes out of the 5 sets output recipes
+    - Making best cookie recipe: Nicole!
 """
 
 import string
