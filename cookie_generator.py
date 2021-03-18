@@ -114,7 +114,7 @@ TODO before Presentation:
             - If a recipe has the same proportion of ingredients as a similar recipe in inspiring set then 
                 it's a better recipe
     - fix documentation: [X]
-        * spacing
+        * spacing 
             - 2 lines between each function[X]
         * __str__ and __repr__ functions for each class[X]
         * docstrings for every class and method[X]
@@ -130,15 +130,13 @@ TODO before Presentation:
     - Making best cookie recipe: Nicole!
 """
 
-import glob
-import json
+
+import json, os, random, string, time, requests
 import numpy as np
-import os
-import random
-import requests
-import string
-import time
+
+import glob
 from bs4 import BeautifulSoup
+
 from flavor_pairing import similarity, pairing
 
 ESSENTIAL_INGREDIENTS = ["sugar", "butter", "flour", "egg", "eggs", "yolk", "yolks", "baking soda", "baking powder", "salt", "vanilla", "vegetable oil"]
