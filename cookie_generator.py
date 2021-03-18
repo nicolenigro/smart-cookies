@@ -119,9 +119,9 @@ TODO before Presentation:
             - 2 lines between each function
         * __str__ and __repr__ functions for each class
         * docstrings for every class and method
-        * .gitignore file
+        * .gitignore file [X]
     - Update instructions in input .txt files using format in Google Doc [X]
-    - Exporting rankings and evaluations to separate 'metrics' file
+    - Exporting rankings and evaluations to separate 'metrics' file [X]
         * All in one .txt file where each recipe and its ranking + score are all on one line, see format below
         * Format: [ranking] [recipe name] [fitness score]/[uniqueness score]
     - Run evaluation 5 times, and save the output recipes after each run 
@@ -197,6 +197,7 @@ class Recipe:
         self.name = name
         self.ingredients = ingredients
         self.instructions = instructions
+        self.score = 0
 
     def similarity_fitness(self):
         """
@@ -532,7 +533,7 @@ class Generator:
                 new_ingredient = random.choice(self.default_mix_ins)
 
             new_ingredient_amount = random.uniform(1, 50)  # FIX THIS
-            recipe.add_ingredient(Ingredient(new_ingredient, new_ingredient_amount))
+            recipe.add_ingredient(Ingredient(new_ingredient, round(new_ingredient_amount, 2)))
 
         elif (current_mutation == "delete"):
             # select random ingredient to remove from recipe
@@ -649,9 +650,29 @@ class Generator:
         """
         fitness_scores = [recipe.similarity_fitness() for recipe in recipes]
         recipe_uniqueness = self.recipe_uniqueness(recipes)
+        index = 0
+        for recipe in recipes:
+            recipe.score = fitness_scores[index] + recipe_uniqueness[index]
+            print(str(recipe.score), recipe.name)
+            index += 1
         recipe_ranks = [fitness_scores[i] + recipe_uniqueness[i] for i in range(len(recipes))]
-        return recipe_ranks 
- 
+        return sorted(recipe_ranks)
+    
+    def export_rankings(self, recipes):
+        """
+        Export rankings to a file
+        """
+        self.rank_recipes(recipes)
+        ranked_recipes = sorted(recipes, key=lambda Recipe: Recipe.score, reverse=True)
+
+        path = "metrics/" + "metrics" + str(1) + ".txt"
+        f = open(path, "w", encoding='utf-8')
+        counter = 1
+        for recipe in ranked_recipes:
+            formatted_recipe = str(counter) + ". " + recipe.name + ", score: " + str(round(recipe.score, 2)) + "\n"
+            f.write(formatted_recipe)
+            counter += 1
+        f.close()
 
 def main():
     g = Generator()
@@ -660,6 +681,7 @@ def main():
     recipes = g.generate(1, 0.8)
 
     recipe_ranks = g.rank_recipes(recipes)
+    g.export_rankings(recipes)
     print(recipe_ranks)
 
     #for recipe in recipes:
