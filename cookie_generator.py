@@ -2,11 +2,11 @@
 PQ2: Smart Cookies
 CSCI 3725
 Team OOG: Ahmed Hameed, Adrienne Miller, Nicole Nigro
-Version Date: 3/11/21
+Version Date: 3/17/21
 
 Description: This system generates cookie recipes.
 
-Dependencies: glob, numpy, os, random
+Dependencies: glob, json, numpy, os, random, requests, string, time, bs4
 """
 
 """
@@ -22,8 +22,6 @@ Meetings:
 - Nicole and Ahmed on March 8th, 1:30-2:30 PM, to work on 
     - sorting of Ingredients in Recipe based on essential and non-essential ingredients.
         - Want compound ingredients like "brown sugar" to be read in as an essential ingredient (use .contains())
-    If there is still time left over then:
-    - 
 
 Outline
 -Take Ingredient and Recipe classes from PQ1
@@ -122,7 +120,7 @@ TODO before Presentation:
         * __str__ and __repr__ functions for each class
         * docstrings for every class and method
         * .gitignore file
-    - Update instructions in input .txt files using format in Google Doc
+    - Update instructions in input .txt files using format in Google Doc [X]
     - Exporting rankings and evaluations to separate 'metrics' file
         * All in one .txt file where each recipe and its ranking + score are all on one line, see format below
         * Format: [ranking] [recipe name] [fitness score]/[uniqueness score]
@@ -133,16 +131,16 @@ TODO before Presentation:
     - Making best cookie recipe: Nicole!
 """
 
-import string
-import time
 import glob
+import json
 import numpy as np
 import os
 import random
-from flavor_pairing import similarity, pairing
-from bs4 import BeautifulSoup
 import requests
-import json
+import string
+import time
+from bs4 import BeautifulSoup
+from flavor_pairing import similarity, pairing
 
 ESSENTIAL_INGREDIENTS = ["sugar", "butter", "flour", "egg", "eggs", "yolk", "yolks", "baking soda", "baking powder", "salt", "vanilla", "vegetable oil"]
 
@@ -251,7 +249,7 @@ class Recipe:
 
     def delete_ingredient(self, ingredient_getting_deleted):
         """
-        Deletes an ingredient from the recipe
+        Deletes an Ingredient object from the Recipe.
         Args:
             ingredient_getting_deleted (Obj): Ingredient to delete
         Return:
@@ -326,6 +324,10 @@ class Recipe:
     def name_recipe(self):
         """
         Name a recipe with an adjective, ingredient name, cookies
+        Args:
+            None
+        Return:
+            name (str): Recipe name
         """
         non_essentials = self.get_non_essentials()
         # if no non essential ingredients --> recipe is basic
@@ -358,12 +360,8 @@ class Recipe:
         output_path = os.path.join(output_dir, self.name)
         f = open(output_path, "w", encoding='utf-8')
         for ingredient in self.ingredients:
-            if (round(ingredient.quantity, 2) < 0.01):
-                line = f"{ingredient.quantity} grams {ingredient.name} \n"
-                f.write(line)
-            else:
-                line = f"{round(ingredient.quantity,2)} grams {ingredient.name} \n"
-                f.write(line)
+            line = f"{round(ingredient.quantity,2)} grams {ingredient.name} \n"
+            f.write(line)
         f.write("\n")
         f.write("Instructions")
         f.write(self.instructions)
@@ -379,22 +377,24 @@ class Recipe:
         """
         output = ""
         for item in self.ingredients:
-            output += item.name + " " + (str)(item.quantity) + "\n"
+            output += (str)(item.quantity) + " grams " + item.name + "\n"
 
         output += "\nInstructions"
-        #output += self.instructions
+        output += self.instructions
         return output
 
 
 class Generator:
     def __init__(self):
         """
-        Initializes an Generator Object with an empty ingredient_names list (all ingredients in all recipes), 
+        Initializes a Generator Object with an empty ingredient_names list (all ingredients in all recipes), 
         an empty recipe list (all recipes in current population) and a counter for new recipes (initalized at 1)
         Args: 
             None
+        Return:
+            None
         """
-        self.ingredient_names = []  # all ingredients in population
+        self.ingredient_names = []  #all ingredients in population
         self.recipes = []
         self.new_recipe_count = 1
         self.default_mix_ins = []
@@ -593,6 +593,11 @@ class Generator:
         
     def get_default_list(self): 
         """
+        Populates our default_mix_ins list with spices, herbs, and nuts.
+        Args:
+            None
+        Return:
+            None
         """ 
         all_spices = pairing("vanilla", 0.00, cat="spice")
         all_herbs = pairing("vanilla", 0.00, cat="herb")
@@ -602,8 +607,6 @@ class Generator:
         self.default_mix_ins += list(all_spices.keys())
         self.default_mix_ins += list(all_herbs.keys())
         self.default_mix_ins += list(all_nuts.keys())
-
-        print(self.default_mix_ins)
     
     def recipe_uniqueness(self, recipes): 
         """ 
