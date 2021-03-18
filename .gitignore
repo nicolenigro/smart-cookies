@@ -5,4 +5,5 @@ __pycache__/
 *$py.class
 
 # operating system-related files
+.DS_Store
 *.DS_Store #file properties cache/storage on macOS

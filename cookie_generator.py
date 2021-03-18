@@ -4,8 +4,7 @@ CSCI 3725
 Team OOG: Ahmed Hameed, Adrienne Miller, Nicole Nigro
 Version Date: 3/17/21
 
-Description: This system generates cookie recipes.
-
+Description: This system uses a modified genetic algorithm to generate, output, and evaluate cookie recipes. 
 Dependencies: glob, json, numpy, os, random, requests, string, time, bs4
 """
 
@@ -114,11 +113,11 @@ TODO before Presentation:
         * Maybe do something with the ingredient amounts? Either as a fitness function or a form of evaluation
             - If a recipe has the same proportion of ingredients as a similar recipe in inspiring set then 
                 it's a better recipe
-    - fix documentation:
+    - fix documentation: [X]
         * spacing
-            - 2 lines between each function
-        * __str__ and __repr__ functions for each class
-        * docstrings for every class and method
+            - 2 lines between each function[X]
+        * __str__ and __repr__ functions for each class[X]
+        * docstrings for every class and method[X]
         * .gitignore file [X]
     - Update instructions in input .txt files using format in Google Doc [X]
     - Exporting rankings and evaluations to separate 'metrics' file [X]
@@ -160,6 +159,7 @@ class Ingredient:
         self.essential = essential
         self.mark_essential_ingredient()
 
+
     def mark_essential_ingredient(self):
         """
         Uses the essential ingredients list to marks which Ingredients are considered "essential" 
@@ -173,6 +173,7 @@ class Ingredient:
             if (item in self.name):
                 self.essential = True
 
+
     def __str__(self):
         """
         Method for printing out an Ingredient object 
@@ -182,6 +183,17 @@ class Ingredient:
             output (str): The string output representing a Ingredient object
         """
         return f"{self.name} {self.quantity} {self.unit}"
+
+
+    def __repr__(self):
+        """
+        Method that returns a representation of an Ingredient object
+        Args: 
+            None
+        Return: 
+            output (str): The string representing Ingredient object
+        """
+        return f"Ingredient({self.name}, {self.quantity}, {self.unit}, {self.essential})"
 
 
 class Recipe:
@@ -199,9 +211,15 @@ class Recipe:
         self.instructions = instructions
         self.score = 0
 
+
     def similarity_fitness(self):
         """
-        
+        Function that calculates the 'similarity fitness' score of a recipe. Iterates through 
+        all non-essential ingredients and uses flavor_pairing.py to retrieve the similarity of that
+        non-essential ingredient with every other non-esential ingredient. If there is no match 
+        for an ingredient in the npy file, 0.5 is automatically added -- if an ingredient is not in the
+        npy Ingredient list, it is from our input recipes, and we can assume that it is a relatively normal ingredient. 
+
         Args:
             None
         Return:
@@ -209,12 +227,10 @@ class Recipe:
         """
         fitness_score = 0
         non_essentials = self.get_non_essentials()
-
         for i in range(len(non_essentials)):
             ingred1 = non_essentials[i].name
             for j in range(i, len(non_essentials)):
                 ingred2 = non_essentials[j].name
-                # THIS TRY STATMENT IS BAD
                 try:
                     sim = similarity(ingred1, ingred2)
                 except:
@@ -222,6 +238,7 @@ class Recipe:
                 fitness_score += sim
 
         return fitness_score 
+
 
     def get_non_essentials(self):
         """ 
@@ -238,6 +255,7 @@ class Recipe:
                 non_essentials.append(ingredient)
         return non_essentials
 
+
     def add_ingredient(self, new_ingredient):
         """
         Adds a new Ingredient object to the list of Ingredients.
@@ -248,6 +266,7 @@ class Recipe:
         """
         self.ingredients.append(new_ingredient)
 
+
     def delete_ingredient(self, ingredient_getting_deleted):
         """
         Deletes an Ingredient object from the Recipe.
@@ -257,6 +276,7 @@ class Recipe:
             None
         """
         self.ingredients.remove(ingredient_getting_deleted)
+
 
     def combine_duplicates(self):
         """
@@ -286,6 +306,7 @@ class Recipe:
             new_ingredients.append(new_ingredient)
 
         self.ingredients = new_ingredients
+
 
     def name_recipe_helper(self, name_ingredient):
         """
@@ -322,6 +343,7 @@ class Recipe:
 
         return words, scores
 
+
     def name_recipe(self):
         """
         Name a recipe with an adjective, ingredient name, cookies
@@ -333,14 +355,14 @@ class Recipe:
         non_essentials = self.get_non_essentials()
         # if no non essential ingredients --> recipe is basic
         if len(non_essentials) == 0:
-            name_ingredient = "basic"
+            name_ingredient = "Basic"
         else:
             # pick a random non essential ingredient
             name_ingredient = np.random.choice(non_essentials).name
 
         # get list of words and associated weights based on occurrenc
         related_words, weights = self.name_recipe_helper(name_ingredient)
-        if len(related_words) == 0:
+        if len(related_words) == 0: # website does not have any matches 
             adjective = "Simple"
         else:
             # select adjective based on weighted scores from website
@@ -349,6 +371,7 @@ class Recipe:
 
         self.name = name
         return name
+
 
     def recipe_export(self, output_dir):
         """ 
@@ -360,13 +383,18 @@ class Recipe:
         """
         output_path = os.path.join(output_dir, self.name)
         f = open(output_path, "w", encoding='utf-8')
+
+        # write each ingredient and quantity to line 
         for ingredient in self.ingredients:
             line = f"{round(ingredient.quantity,2)} grams {ingredient.name} \n"
             f.write(line)
         f.write("\n")
+
+        # write instructions to file
         f.write("Instructions")
         f.write(self.instructions)
         f.close()
+
 
     def __str__(self):
         """
@@ -385,21 +413,35 @@ class Recipe:
         return output
 
 
+    def __repr__(self):
+        """
+        Method that returns a representation of a Recipe object
+        Args: 
+            None
+        Return: 
+            output (str): The string representing Recipe object
+        """
+        return f"Recipe({self.name}, {self.ingredients}, {self.instructions})"
+
+
 class Generator:
-    def __init__(self):
+    def __init__(self, recipe_type):
         """
         Initializes a Generator Object with an empty ingredient_names list (all ingredients in all recipes), 
         an empty recipe list (all recipes in current population) and a counter for new recipes (initalized at 1)
         Args: 
-            None
+            recipe_type (str): type of recipe to be created
         Return:
             None
         """
+        self.recipe_type = recipe_type # used in __str__ method
         self.ingredient_names = []  #all ingredients in population
         self.recipes = []
-        self.new_recipe_count = 1
+        self.current_generation = 1 # used in __str__ method
+        self.new_recipe_count = 0
         self.default_mix_ins = []
         self.get_default_list()
+    
 
     def read_files(self, input_directory):
         """
@@ -421,7 +463,7 @@ class Generator:
                     # split line into list of form [quantity, ingredient]
                     split_line = line.rstrip().split(" grams ")
                     ingredient_name = split_line[1]
-                    print(ingredient_name)
+                   # print(ingredient_name)
                     ingredient_quantity = round(float(split_line[0]), 2)
                     ingredient = Ingredient(
                         name=ingredient_name, quantity=ingredient_quantity)
@@ -441,6 +483,7 @@ class Generator:
             # save recipe to the list of recipes
             self.recipes.append(recipe)
 
+
     def crossover(self):
         """
         Weighted by recipe fitness, selects two 'parent' recipes to be crossed over. Then, 
@@ -455,7 +498,7 @@ class Generator:
         recipes_fitness = [recipe.similarity_fitness() for recipe in self.recipes]
         parent1, parent2 = random.choices(population=self.recipes, weights=recipes_fitness, k=2)
 
-        # crossover the non-essentials/mix ins of both parent recipes and combine w/ parent1 essentials
+        # extract parent1 essentials and nonessentials
         non_essentials_parent1 = []
         essentials_parent1 = []
         for ingredient in parent1.ingredients:
@@ -464,28 +507,30 @@ class Generator:
             else:
                 non_essentials_parent1.append(ingredient)
 
+        # extract parent2 nonessentials
         non_essentials_parent2 = []
         for ingredient in parent2.ingredients:
             if not ingredient.essential:
                 non_essentials_parent2.append(ingredient)
 
+        # select random pivots for noneseenial ingredients
         pivot_1 = random.randint(0, len(non_essentials_parent1))
         pivot_2 = random.randint(0, len(non_essentials_parent2))
 
         # create subset of parent recipes that will be used in child
         subgroup_recipe1 = non_essentials_parent1[1:pivot_1]
-        
-        # create child recipe object
         subgroup_recipe2 = non_essentials_parent2[pivot_2:]
 
+         # create child recipe object
         child_name = "recipe" + str(self.new_recipe_count) + ".txt"
-        child_ingredients = essentials_parent1 + subgroup_recipe1 + subgroup_recipe2
-        child = Recipe(name=child_name, ingredients=child_ingredients, instructions=parent1.instructions)
+        child_ingredients = essentials_parent1 + subgroup_recipe1 + subgroup_recipe2 # always use parent1 essentials
+        child = Recipe(name=child_name, ingredients=child_ingredients, instructions=parent1.instructions) # always use parent1 insturctions
         child.combine_duplicates()
 
         self.new_recipe_count += 1
 
         return child
+
 
     def mutation(self, recipe, prob_of_mutation):
         """
@@ -508,6 +553,7 @@ class Generator:
         current_mutation = random.choice(mutation_types)
         non_essentials = []
 
+        # extract nonessential ingredients
         for ingredient in recipe.ingredients:
             if not ingredient.essential:
                 non_essentials.append(ingredient)
@@ -517,7 +563,7 @@ class Generator:
             random_order = random.choices(non_essentials, k=len(non_essentials))
             found_ingredient = False
 
-            # loop through nonessential ingredients until you find one that works
+            # loop through nonessential ingredients until you find one that is in npy file
             for i in range(len(random_order)):
                 reference_ingredient = random_order[i]
                 try:
@@ -528,11 +574,12 @@ class Generator:
                     continue
                 found_ingredient = True
                 break
-
+            
+            # we didn't find a nonessential in npy file -- pick a random one
             if not found_ingredient:
                 new_ingredient = random.choice(self.default_mix_ins)
 
-            new_ingredient_amount = random.uniform(1, 50)  # FIX THIS
+            new_ingredient_amount = random.uniform(1, 50)  # TODO: fix this
             recipe.add_ingredient(Ingredient(new_ingredient, round(new_ingredient_amount, 2)))
 
         elif (current_mutation == "delete"):
@@ -540,8 +587,9 @@ class Generator:
             ingredient_to_delete = random.choice(recipe.ingredients)
             recipe.delete_ingredient(ingredient_to_delete)
 
-        recipe.combine_duplicates()
+        recipe.combine_duplicates() # combine any duplicates in recipe
         return recipe
+
 
     def generate_population(self, mutation_prob):
         """
@@ -578,6 +626,7 @@ class Generator:
 
         self.recipes = new_population
 
+
     def generate(self, num_generations, mutation_prob):
         """ 
         Performs the genetic algorithm for num_generations and returns the final recipes generated. 
@@ -590,8 +639,10 @@ class Generator:
         """
         for i in range(num_generations):
             self.generate_population(mutation_prob)
+            self.current_generation += 1
         return self.recipes
-        
+
+
     def get_default_list(self): 
         """
         Populates our default_mix_ins list with spices, herbs, and nuts.
@@ -600,15 +651,17 @@ class Generator:
         Return:
             None
         """ 
+        # extract relavent categories of ingredients from npy file
         all_spices = pairing("vanilla", 0.00, cat="spice")
         all_herbs = pairing("vanilla", 0.00, cat="herb")
         all_nuts = pairing("vanilla", 0.00, cat="nut/seed/pulse")
 
-
+        # add to default mix in lists
         self.default_mix_ins += list(all_spices.keys())
         self.default_mix_ins += list(all_herbs.keys())
         self.default_mix_ins += list(all_nuts.keys())
     
+
     def recipe_uniqueness(self, recipes): 
         """ 
         Iterate over the recipes our system generated, keeping track of how often ingredients 
@@ -622,6 +675,7 @@ class Generator:
         ingredient_count = dict()
         scores = []
         
+        # create dictionary mapping ingredient names to the number of times they appear in recipes
         for recipe in recipes:
             for ingredient in recipe.ingredients: 
                 if ingredient.name in ingredient_count:
@@ -629,16 +683,18 @@ class Generator:
                 else:
                     ingredient_count[ingredient.name] = 1
         
+        # calculate uniqueness score for each recipe 
         for recipe in recipes:
             score = 0
             for ingredient in recipe.ingredients: 
                 score += ingredient_count[ingredient.name]
-            score = 1 / score 
+            score = 1 / score # invert score so that higher = better
             scores.append(score)
 
         return scores 
         
-    def rank_recipes(self, recipes): 
+        
+    def calculate_ranks(self, recipes): 
         """
         Evaluates recipes based on two functions: recipe_uniqueness() and similarity_fitness(). 
         Higher score = higher quality recipe (unique and/or flavors are similar)
@@ -646,23 +702,22 @@ class Generator:
         Args:
             recipes (list): recipes generated by the system
         Return:
-            recipe_ranks (list): a list of the evaluation scores for each recipe
+            None
         """
         fitness_scores = [recipe.similarity_fitness() for recipe in recipes]
         recipe_uniqueness = self.recipe_uniqueness(recipes)
         index = 0
         for recipe in recipes:
             recipe.score = fitness_scores[index] + recipe_uniqueness[index]
-            print(str(recipe.score), recipe.name)
+            #print(str(recipe.score), recipe.name)
             index += 1
-        recipe_ranks = [fitness_scores[i] + recipe_uniqueness[i] for i in range(len(recipes))]
-        return sorted(recipe_ranks)
     
+
     def export_rankings(self, recipes):
         """
         Export rankings to a file
         """
-        self.rank_recipes(recipes)
+        self.calculate_ranks(recipes)
         ranked_recipes = sorted(recipes, key=lambda Recipe: Recipe.score, reverse=True)
 
         path = "metrics/" + "metrics" + str(1) + ".txt"
@@ -674,24 +729,48 @@ class Generator:
             counter += 1
         f.close()
 
+
+    def __str__(self): 
+        """
+        Method for printing out a Generator object. 
+        Args:
+            None
+        Return:
+            output (str): The string output representing a Generator object
+        """ 
+        return f"{self.recipe_type} Recipe Generator on Generation {self.current_generation}"
+    
+
+    def __repr__(self):
+        """
+        Method that returns a representation of a Generator object
+        Args: 
+            None
+        Return: 
+            output (str): The string representing Generator object
+        """
+        return f"Generator({self.recipe_type})"      
+
+
 def main():
-    g = Generator()
+    g = Generator("Cookie")
     g.read_files("input/*.txt")
 
     recipes = g.generate(1, 0.8)
-
-    recipe_ranks = g.rank_recipes(recipes)
-    g.export_rankings(recipes)
-    print(recipe_ranks)
+    print(g)
+    #recipe_ranks = g.rank_recipes(recipes)
+    #print(recipe_ranks)
+    #g.export_rankings(recipes)
+    #print(recipe_ranks)
 
     #for recipe in recipes:
        # recipe.name_recipe()
        # recipe.recipe_export(output_dir="output")
        # time.sleep(2) 
 
-    max_index = recipe_ranks.index(max(recipe_ranks))
-    best_recipe = recipes[max_index]
-    print(best_recipe)
+    #max_index = recipe_ranks.index(max(recipe_ranks))
+    #best_recipe = recipes[max_index]
+    #print(best_recipe)
     
 
 if __name__ == "__main__":
