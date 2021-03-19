@@ -1,0 +1,50 @@
+1. True Cardamom Cookies, score: 42.87
+2. Natural Maple Syrup Cookies, score: 39.94
+3. Wild Oats Cookies, score: 34.55
+4. Hot Hazelnut Cookies, score: 33.06
+5. Medium-sized Zucchini Cookies, score: 28.96
+6. Bright Ginger Cookies, score: 27.66
+7. Wild Oats Cookies, score: 23.67
+8. Brown M&ms Cookies, score: 23.45
+9. Charming Little Chocolate Cookies, score: 23.14
+10. Teaspoonful Powdered Cinnamon Cookies, score: 23.14
+11. Native Pecan Cookies, score: 22.67
+12. Lesser Cardamom Cookies, score: 22.07
+13. Red Hot Maple Syrup Cookies, score: 22.04
+14. Red Hot Maple Syrup Cookies, score: 21.97
+15. Simple White Chocolate Chips Cookies, score: 21.74
+16. Wild Oats Cookies, score: 20.94
+17. Choicest Pecan Cookies, score: 20.82
+18. Last Fried Pecan Cookies, score: 20.21
+19. Medium-sized Zucchini Cookies, score: 19.88
+20. Delicious Cream Cheese Cookies, score: 19.76
+21. Yellow M&ms Cookies, score: 18.33
+22. Native Hazelnut Cookies, score: 17.48
+23. Simple Pretzel Pieces Cookies, score: 17.29
+24. Officinal Cardamom Cookies, score: 17.15
+25. Hot Chocolate Cookies, score: 16.83
+26. Exquisite Chocolate Cookies, score: 16.73
+27. Hot Hazelnut Cookies, score: 16.73
+28. Handsome Cinnamon Cookies, score: 16.54
+29. Dusty Cocoa Cookies, score: 16.43
+30. Shredded Coconut Cookies, score: 15.87
+31. Invisible Molasses Cookies, score: 15.6
+32. Slow Molasses Cookies, score: 14.64
+33. Northern Pecan Cookies, score: 14.56
+34. Wild Oats Cookies, score: 14.5
+35. Teaspoonful Cornstarch Cookies, score: 14.33
+36. Powdered Cinnamon Cookies, score: 14.31
+37. Simple White Chocolate Chips Cookies, score: 14.2
+38. Safe Cocoa Cookies, score: 14.0
+39. Simple Roughly Chopped Oreos Cookies, score: 13.95
+40. Hot Chocolate Cookies, score: 13.77
+41. Dull Molasses Cookies, score: 13.77
+42. Lesser Cardamom Cookies, score: 13.77
+43. Solid Walnut Cookies, score: 13.76
+44. Wild Oats Cookies, score: 13.62
+45. Sweet Chocolate Cookies, score: 12.73
+46. Powdered Cinnamon Cookies, score: 12.73
+47. Simple Lime Zest Cookies, score: 12.58
+48. Thick Chocolate Cookies, score: 11.76
+49. Hot Maple Syrup Cookies, score: 11.62
+50. Simple Roughly Chopped Oreos Cookies, score: 11.38

@@ -1,0 +1,50 @@
+1. Hot Maple Syrup Cookies, score: 29.89
+2. Hot Cocoa Cookies, score: 29.85
+3. Stewed Pumpkin Cookies, score: 27.49
+4. Simple Espresso Powder Cookies, score: 27.17
+5. Pale Cranberry Cookies, score: 25.51
+6. Fat Raisin Cookies, score: 24.28
+7. Sweet Cinnamon Cookies, score: 24.28
+8. Local Nut Cookies, score: 22.32
+9. Harmless Clove Cookies, score: 20.46
+10. Slender Clove Cookies, score: 20.18
+11. Creamy Cocoa Cookies, score: 19.38
+12. Hot Cardamom Cookies, score: 18.86
+13. Simple Pumpkin Pie Spice Cookies, score: 18.86
+14. Hot Chocolate Cookies, score: 18.86
+15. Wild Oats Cookies, score: 18.86
+16. Simple Lemon Zest Cookies, score: 18.79
+17. Cherry Raisin Cookies, score: 18.6
+18. Brown Or Dull Cinnamon Cookies, score: 18.0
+19. Lucky Raisin Cookies, score: 17.68
+20. Yellow Pumpkin Cookies, score: 17.65
+21. Finest Raisin Cookies, score: 17.65
+22. Simple White Chocolate Chips Cookies, score: 17.57
+23. Wild Oats Cookies, score: 17.31
+24. Hot Chocolate Cookies, score: 16.96
+25. Lucky Raisin Cookies, score: 16.69
+26. Fresh Whole Milk Cookies, score: 16.64
+27. Baleful Ginger Cookies, score: 16.51
+28. Red Cranberry Cookies, score: 16.15
+29. Timid Afraid Coconut Cookies, score: 16.12
+30. Horrible Cocoa Cookies, score: 16.06
+31. Simple Pumpkin Pie Spice Cookies, score: 15.46
+32. Hollow Chocolate Cookies, score: 15.1
+33. Smooth Oats Cookies, score: 15.08
+34. Teaspoonful Powdered Ginger Cookies, score: 15.05
+35. Simple Pumpkin Pie Spice Cookies, score: 15.05
+36. Teaspoonful Powdered Cinnamon Cookies, score: 14.9
+37. Enormous Chocolate Cookies, score: 14.86
+38. Simple Pumpkin Pie Spice Cookies, score: 14.86
+39. Baked Raisin Cookies, score: 14.76
+40. Ordinary Maple Syrup Cookies, score: 14.53
+41. Graceful Coconut Cookies, score: 14.37
+42. Hot Chocolate Cookies, score: 14.14
+43. Decayed Pumpkin Cookies, score: 14.09
+44. Lurid Cinnamon Cookies, score: 12.69
+45. Chopped Clove Cookies, score: 11.93
+46. Different Raisin Cookies, score: 11.73
+47. Rich Cinnamon Cookies, score: 11.61
+48. Entire Cinnamon Cookies, score: 11.23
+49. Bald Pumpkin Cookies, score: 10.87
+50. Thick Hot Chocolate Cookies, score: 10.78

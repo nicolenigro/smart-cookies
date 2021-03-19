@@ -1,50 +1,50 @@
-1. recipe28.txt, score: 17.97
-2. recipe9.txt, score: 13.22
-3. recipe47.txt, score: 11.19
-4. recipe13.txt, score: 9.55
-5. recipe33.txt, score: 9.52
-6. recipe10.txt, score: 8.87
-7. recipe41.txt, score: 8.84
-8. input/cowboy_cookies.txt, score: 8.0
-9. input/oatmeal_raisin_cookies.txt, score: 7.79
-10. recipe43.txt, score: 7.33
-11. input/zucchini_oatmeal_chocolate_chip_cookies.txt, score: 7.25
-12. recipe27.txt, score: 6.91
-13. input/cranberry_and_white_chocolate_cookies.txt, score: 6.15
-14. input/chewy_pumpkin_chocolate_chip_cookies.txt, score: 6.09
-15. input/date_and_walnut_cookies.txt, score: 6.06
-16. input/german_chocolate_cookies.txt, score: 5.84
-17. recipe23.txt, score: 5.67
-18. input/chewy_molasses_cookies.txt, score: 5.67
-19. recipe38.txt, score: 5.55
-20. input/cookies_and_cream_cookies.txt, score: 5.5
-21. recipe5.txt, score: 5.5
-22. recipe48.txt, score: 5.43
-23. input/grammy's_spice_cookies.txt, score: 5.28
-24. input/ginger_cookies.txt, score: 5.28
-25. recipe11.txt, score: 5.28
-26. input/brownie_cookies.txt, score: 4.03
-27. input/monster_cookies.txt, score: 3.96
-28. recipe30.txt, score: 3.9
-29. recipe46.txt, score: 3.85
-30. recipe24.txt, score: 3.81
-31. recipe42.txt, score: 3.76
-32. recipe29.txt, score: 3.74
-33. input/hobnob_cookies.txt, score: 3.62
-34. recipe36.txt, score: 3.6
-35. recipe19.txt, score: 3.59
-36. recipe21.txt, score: 3.54
-37. input/red_velvet_cookies_with_white_chocolate_chunks.txt, score: 3.51
-38. input/maple_brown_sugar_cookies.txt, score: 3.5
-39. input/white_chocolate_macdamia_nut_cookies.txt, score: 3.5
-40. input/butterscotch_pretzel_chocolate_chip_cookies.txt, score: 3.5
-41. input/pepper-cumin_cookies.txt, score: 3.03
-42. input/citrus_cookies.txt, score: 2.86
-43. input/obscenely_chocolatey_chocolate_cookies.txt, score: 2.53
-44. recipe37.txt, score: 2.53
-45. input/double_chocolate_cookies.txt, score: 2.53
-46. recipe20.txt, score: 2.41
-47. recipe22.txt, score: 2.41
-48. input/cream_cheese_sugar_cookies.txt, score: 2.09
-49. input/potato_chip_chocolate_chip_cookies.txt, score: 2.02
-50. input/salted_tahini_chocolate_chip_cookies.txt, score: 2.0
+1. Southern Pecan Cookies, score: 32.86
+2. Nice Tame Oats Cookies, score: 32.58
+3. Hot Cardamom Cookies, score: 32.52
+4. Powdered Cinnamon Cookies, score: 32.52
+5. White Cinnamon Cookies, score: 32.52
+6. Simple Espresso Powder Cookies, score: 32.52
+7. Whole Nutmeg Cookies, score: 32.19
+8. Southern Pecan Cookies, score: 30.61
+9. Powdered Ginger Cookies, score: 29.08
+10. Pink Clove Cookies, score: 25.97
+11. Cool Spearmint Cookies, score: 24.39
+12. Southern Pecan Cookies, score: 24.12
+13. Native Pecan Cookies, score: 21.69
+14. Grand Raisin Cookies, score: 19.32
+15. White-walled Cocoa Cookies, score: 18.85
+16. Sticky Raisin Cookies, score: 18.27
+17. Wild Oats Cookies, score: 17.96
+18. Teaspoonful Cornstarch Cookies, score: 17.73
+19. Simple White Chocolate Chips Cookies, score: 17.7
+20. Silken Cocoa Cookies, score: 16.55
+21. Fat Raisin Cookies, score: 16.5
+22. Red Hot Maple Syrup Cookies, score: 16.19
+23. Molten Molasses Cookies, score: 14.7
+24. Teaspoonful Cornstarch Cookies, score: 14.62
+25. Withered Clove Cookies, score: 14.18
+26. Wooden Nutmeg Cookies, score: 13.93
+27. Wild Oats Cookies, score: 13.31
+28. Teaspoonful Powdered Cinnamon Cookies, score: 13.23
+29. Little Hollow Chocolate Cookies, score: 13.11
+30. Simple Espresso Powder Cookies, score: 13.1
+31. Drunk Cocoa Cookies, score: 12.78
+32. Shadowy Nutmeg Cookies, score: 12.62
+33. Wild Oats Cookies, score: 12.47
+34. Lesser Cardamom Cookies, score: 12.37
+35. Shredded Coconut Cookies, score: 11.94
+36. Fragrant Spearmint Cookies, score: 11.94
+37. Hot Dates Cookies, score: 11.85
+38. Delicious Chocolate Cookies, score: 11.85
+39. Wild Oats Cookies, score: 11.76
+40. Practical Pecan Cookies, score: 11.76
+41. Powdered Cinnamon Cookies, score: 11.73
+42. Wild Cardamom Cookies, score: 11.7
+43. Large Native Pecan Cookies, score: 11.68
+44. Teaspoonful Cinnamon Cookies, score: 11.54
+45. Wild Oats Cookies, score: 11.49
+46. Elegant Almond Cookies, score: 11.12
+47. Long Pecan Cookies, score: 11.08
+48. Hardy Northern Pecan Cookies, score: 11.03
+49. Hot Maple Syrup Cookies, score: 9.77
+50. Withered Clove Cookies, score: 9.73

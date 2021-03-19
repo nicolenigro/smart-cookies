@@ -128,6 +128,11 @@ TODO before Presentation:
         * 5 different evaluation .txt files in metrics
     - Choosing best cookie recipes out of the 5 sets output recipes
     - Making best cookie recipe: Nicole!
+
+TODO as of 3/19
+-Fixing amounts when adding an ingredient (spices should be lower)
+-Change naming so all 50 have different names (no Wild Oats Cookies repeats-Remixed?)
+-Incorporating theory
 """
 
 
@@ -718,7 +723,7 @@ class Generator:
         self.calculate_ranks(recipes)
         ranked_recipes = sorted(recipes, key=lambda Recipe: Recipe.score, reverse=True)
 
-        path = "metrics/" + "metrics" + str(1) + ".txt"
+        path = "metrics/" + "metrics" + str(5) + ".txt"
         f = open(path, "w", encoding='utf-8')
         counter = 1
         for recipe in ranked_recipes:
@@ -754,22 +759,14 @@ def main():
     g = Generator("Cookie")
     g.read_files("input/*.txt")
 
-    recipes = g.generate(1, 0.8)
-    print(g)
-    #recipe_ranks = g.rank_recipes(recipes)
-    #print(recipe_ranks)
-    #g.export_rankings(recipes)
-    #print(recipe_ranks)
+    recipes = g.generate(5, 0.2)
 
-    #for recipe in recipes:
-       # recipe.name_recipe()
-       # recipe.recipe_export(output_dir="output")
-       # time.sleep(2) 
+    for recipe in recipes:
+       recipe.name_recipe()
+       recipe.recipe_export(output_dir="output")
+       time.sleep(2) 
 
-    #max_index = recipe_ranks.index(max(recipe_ranks))
-    #best_recipe = recipes[max_index]
-    #print(best_recipe)
-    
+    g.export_rankings(recipes)
 
 if __name__ == "__main__":
     main()
