@@ -123,15 +123,15 @@ TODO before Presentation:
     - Exporting rankings and evaluations to separate 'metrics' file [X]
         * All in one .txt file where each recipe and its ranking + score are all on one line, see format below
         * Format: [ranking] [recipe name] [fitness score]/[uniqueness score]
-    - Run evaluation 5 times, and save the output recipes after each run 
+    - Run evaluation 5 times, and save the output recipes after each run [X]
         * Can save the recipes manually or change the code 
         * 5 different evaluation .txt files in metrics
-    - Choosing best cookie recipes out of the 5 sets output recipes
+    - Choosing best cookie recipes out of the 5 sets output recipes [X]
     - Making best cookie recipe: Nicole!
 
 TODO as of 3/19
--Fixing amounts when adding an ingredient (spices should be lower)
--Change naming so all 50 have different names (no Wild Oats Cookies repeats-Remixed?)
+-Fixing amounts when adding an ingredient (spices should be lower) [X]
+-Change naming so all 50 have different names (no Wild Oats Cookies repeats-Remixed?) [partially done]
 -Incorporating theory
 """
 
@@ -384,6 +384,15 @@ class Recipe:
         Return:
             None
         """
+        current_recipe_names = []
+        for filename in glob.glob("output/*"):
+            current_recipe_names.append(filename)
+
+        format_name = "output/" + self.name
+
+        if format_name in current_recipe_names:
+            self.name_recipe()
+
         output_path = os.path.join(output_dir, self.name)
         f = open(output_path, "w", encoding='utf-8')
 
@@ -582,7 +591,14 @@ class Generator:
             if not found_ingredient:
                 new_ingredient = random.choice(self.default_mix_ins)
 
-            new_ingredient_amount = random.uniform(1, 50)  # TODO: fix this
+            all_spices = pairing("vanilla", 0.00, cat="spice")
+            all_herbs = pairing("vanilla", 0.00, cat="herb")
+            
+            if new_ingredient in all_spices or new_ingredient in all_herbs:
+                new_ingredient_amount = random.uniform(1, 20)
+            else:
+                new_ingredient_amount = random.uniform(10, 100)
+
             recipe.add_ingredient(Ingredient(new_ingredient, round(new_ingredient_amount, 2)))
 
         elif (current_mutation == "delete"):
@@ -723,7 +739,7 @@ class Generator:
         self.calculate_ranks(recipes)
         ranked_recipes = sorted(recipes, key=lambda Recipe: Recipe.score, reverse=True)
 
-        path = "metrics/" + "metrics" + str(5) + ".txt"
+        path = "metrics/" + "metrics" + "test" + ".txt"
         f = open(path, "w", encoding='utf-8')
         counter = 1
         for recipe in ranked_recipes:

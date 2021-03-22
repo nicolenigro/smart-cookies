@@ -1,0 +1,50 @@
+1. Narrow Ginger Cookies, score: 60.63
+2. White Ginger Cookies, score: 38.42
+3. True Cardamom Cookies, score: 38.23
+4. Extra Oats Cookies, score: 35.18
+5. Dry Cream Cheese Cookies, score: 32.8
+6. Fresh-ground Black Pepper Cookies, score: 32.59
+7. Simple Lime Zest Cookies, score: 30.88
+8. Common Pecan Cookies, score: 30.76
+9. Powdered Cardamom Cookies, score: 30.67
+10. Wonderful Nutmeg Cookies, score: 29.95
+11. Sour Coconut Cookies, score: 29.58
+12. Spicy Nutmeg Cookies, score: 27.12
+13. Simple Pumpkin Pie Spice Cookies, score: 27.06
+14. Fresh Maple Syrup Cookies, score: 26.97
+15. Hardy Northern Pecan Cookies, score: 26.37
+16. Pickled Ginger Cookies, score: 26.31
+17. Simple White Chocolate Chips Cookies, score: 24.45
+18. Miniature Chocolate Cookies, score: 23.53
+19. Stray Oats Cookies, score: 23.5
+20. Enough Wild Oats Cookies, score: 23.41
+21. Simple Roughly Chopped Oreos Cookies, score: 23.18
+22. Dry Coconut Cookies, score: 22.66
+23. Red Licorice Cookies, score: 22.09
+24. Shredded Coconut Cookies, score: 21.85
+25. Hot Chocolate Cookies, score: 21.85
+26. Vigorous Pecan Cookies, score: 21.85
+27. Fresh Green Coconut Cookies, score: 21.82
+28. Whole Cinnamon Cookies, score: 21.81
+29. Warm Maple Syrup Cookies, score: 21.45
+30. Simple Roughly Chopped Oreos Cookies, score: 20.8
+31. Poor Ginger Cookies, score: 19.74
+32. Meal, Black Molasses Cookies, score: 19.74
+33. Wild Oats Cookies, score: 19.29
+34. Tough Nut Cookies, score: 19.08
+35. Main Clove Cookies, score: 18.28
+36. Aggressive Clove Cookies, score: 18.03
+37. Teaspoonful Ginger Cookies, score: 17.75
+38. Wild Oats Cookies, score: 17.54
+39. Odd Cardamom Cookies, score: 17.35
+40. Powdered Cinnamon Cookies, score: 17.34
+41. Dry Oats Cookies, score: 17.23
+42. Pale Cinnamon Cookies, score: 17.0
+43. Black Walnut Cookies, score: 16.57
+44. Sweet Chocolate Cookies, score: 16.47
+45. Teaspoonful Powdered Ginger Cookies, score: 16.25
+46. Simple Lemon Zest Cookies, score: 16.25
+47. Tall Coconut Cookies, score: 16.08
+48. Highest Flavored Pecan Cookies, score: 16.07
+49. Soft Cream Cheese Cookies, score: 15.74
+50. Powdered Cinnamon Cookies, score: 15.72
