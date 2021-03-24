@@ -38,9 +38,6 @@ def pairing(ingr, threshold, cat=None):
                         pairings[i] = similarity(ingr, i)
             else:
                 pairings[i] = similarity(ingr, i)
-    #for key, value in sorted(pairings.items(), key=lambda kv: (kv[1],kv[0]), \
-    #reverse=True):
-        #print(key, value)
     return pairings
 
 
@@ -61,8 +58,6 @@ def main():
     request_pairing("green tea", 0.6, "fruit")
     request_pairing("zucchini", 0.01)
     print(pairing("vanilla", 0.35))
-    #print(INGRED_CATEGORIES)
-    print(INGREDIENT_LIST)
 
 if __name__ == "__main__":
     main()

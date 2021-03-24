@@ -1,50 +1,50 @@
-1. Narrow Ginger Cookies, score: 60.63
-2. White Ginger Cookies, score: 38.42
-3. True Cardamom Cookies, score: 38.23
-4. Extra Oats Cookies, score: 35.18
-5. Dry Cream Cheese Cookies, score: 32.8
-6. Fresh-ground Black Pepper Cookies, score: 32.59
-7. Simple Lime Zest Cookies, score: 30.88
-8. Common Pecan Cookies, score: 30.76
-9. Powdered Cardamom Cookies, score: 30.67
-10. Wonderful Nutmeg Cookies, score: 29.95
-11. Sour Coconut Cookies, score: 29.58
-12. Spicy Nutmeg Cookies, score: 27.12
-13. Simple Pumpkin Pie Spice Cookies, score: 27.06
-14. Fresh Maple Syrup Cookies, score: 26.97
-15. Hardy Northern Pecan Cookies, score: 26.37
-16. Pickled Ginger Cookies, score: 26.31
-17. Simple White Chocolate Chips Cookies, score: 24.45
-18. Miniature Chocolate Cookies, score: 23.53
-19. Stray Oats Cookies, score: 23.5
-20. Enough Wild Oats Cookies, score: 23.41
-21. Simple Roughly Chopped Oreos Cookies, score: 23.18
-22. Dry Coconut Cookies, score: 22.66
-23. Red Licorice Cookies, score: 22.09
-24. Shredded Coconut Cookies, score: 21.85
-25. Hot Chocolate Cookies, score: 21.85
-26. Vigorous Pecan Cookies, score: 21.85
-27. Fresh Green Coconut Cookies, score: 21.82
-28. Whole Cinnamon Cookies, score: 21.81
-29. Warm Maple Syrup Cookies, score: 21.45
-30. Simple Roughly Chopped Oreos Cookies, score: 20.8
-31. Poor Ginger Cookies, score: 19.74
-32. Meal, Black Molasses Cookies, score: 19.74
-33. Wild Oats Cookies, score: 19.29
-34. Tough Nut Cookies, score: 19.08
-35. Main Clove Cookies, score: 18.28
-36. Aggressive Clove Cookies, score: 18.03
-37. Teaspoonful Ginger Cookies, score: 17.75
-38. Wild Oats Cookies, score: 17.54
-39. Odd Cardamom Cookies, score: 17.35
-40. Powdered Cinnamon Cookies, score: 17.34
-41. Dry Oats Cookies, score: 17.23
-42. Pale Cinnamon Cookies, score: 17.0
-43. Black Walnut Cookies, score: 16.57
-44. Sweet Chocolate Cookies, score: 16.47
-45. Teaspoonful Powdered Ginger Cookies, score: 16.25
-46. Simple Lemon Zest Cookies, score: 16.25
-47. Tall Coconut Cookies, score: 16.08
-48. Highest Flavored Pecan Cookies, score: 16.07
-49. Soft Cream Cheese Cookies, score: 15.74
-50. Powdered Cinnamon Cookies, score: 15.72
+1. Simple Roughly Chopped Oreos Cookies 2, score: 27.43
+2. Simple White Chocolate Chips Cookies, score: 20.64
+3. Juicy Pecan Cookies, score: 20.36
+4. Simple Lemon Zest Cookies 2, score: 19.56
+5. Plain Cornstarch Cookies, score: 19.11
+6. Fantastic White Chocolate Cookies, score: 19.05
+7. Certain Dates Cookies, score: 17.75
+8. Whole Black Pepper Cookies, score: 17.72
+9. Sleek Ginger Cookies, score: 17.42
+10. Old Chinese Ginger Cookies, score: 16.31
+11. Simple Pumpkin Pie Spice Cookies, score: 15.3
+12. Old, Wild Pecan Cookies, score: 14.78
+13. Smooth Chocolate Cookies, score: 14.16
+14. Aromatic Molasses Cookies, score: 13.76
+15. Cupful Molasses Cookies, score: 13.76
+16. Hot Chocolate Cookies, score: 13.35
+17. Full Cream Cheese Cookies, score: 13.18
+18. Rich Fresh Cream Cheese Cookies, score: 13.13
+19. Shaggy Coconut Cookies, score: 13.11
+20. Wild Oats Cookies, score: 13.11
+21. Simple White Chocolate Chips Cookies 2, score: 12.53
+22. Wild Oats Cookies 3, score: 12.23
+23. Simple Lemon Zest Cookies 3, score: 12.2
+24. Teaspoonful Cornstarch Cookies, score: 12.2
+25. Little Wild Cumin Cookies, score: 11.95
+26. Simple Lemon Zest Cookies, score: 11.3
+27. Wild Oats Cookies 2, score: 11.26
+28. Soft, Small Cream Cheese Cookies, score: 11.23
+29. Simple Roughly Chopped Oreos Cookies, score: 11.2
+30. Powdered Cinnamon Cookies, score: 10.9
+31. Native Ginger Cookies, score: 10.88
+32. Hot Chocolate Cookies 2, score: 10.88
+33. Hot Maple Syrup Cookies 2, score: 10.62
+34. Hot Maple Syrup Cookies, score: 10.62
+35. Golden Maple Syrup Cookies, score: 10.24
+36. Southern Pecan Cookies, score: 9.75
+37. Official Cumin Cookies, score: 9.54
+38. Liquid Cumin Cookies, score: 9.54
+39. Delusional Nut Cookies, score: 9.43
+40. Sticky Molasses Cookies, score: 9.31
+41. Clean Oats Cookies, score: 9.27
+42. Dry Cumin Cookies, score: 9.17
+43. Grand Oats Cookies, score: 9.0
+44. Homemade Pecan Cookies, score: 8.79
+45. Simple White Chocolate Chips Cookies 3, score: 8.79
+46. Fine Pecan Cookies, score: 8.18
+47. Wild Oats Cookies 4, score: 8.12
+48. Wild Oats Cookies 5, score: 8.0
+49. Bitter Chocolate Cookies, score: 7.98
+50. Certain Dates Cookies 2, score: 7.73

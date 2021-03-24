@@ -2,109 +2,14 @@
 PQ2: Smart Cookies
 CSCI 3725
 Team OOG: Ahmed Hameed, Adrienne Miller, Nicole Nigro
-Version Date: 3/17/21
+Version Date: 3/24/21
 
 Description: This system uses a modified genetic algorithm to generate, output, and evaluate cookie recipes. 
+
 Dependencies: glob, json, numpy, os, random, requests, string, time, bs4
 """
 
 """
-Week of March 8th --> 
-- naming function in Recipe class [X]
-- updating readings in files [X]
-- mutations: incorporate flavor pairings[X]
-    - need to fine tune this --> we are getting super weird stuff 
-- crossover --> only do on non essentials[X]
-- fitness function is average compatability of nonessential ingredients 
-
-Meetings:
-- Nicole and Ahmed on March 8th, 1:30-2:30 PM, to work on 
-    - sorting of Ingredients in Recipe based on essential and non-essential ingredients.
-        - Want compound ingredients like "brown sugar" to be read in as an essential ingredient (use .contains())
-
-Outline
--Take Ingredient and Recipe classes from PQ1
-    *Ingredient
-        -Unit (i.e. cups, teaspoons) [X]
-        -Flavor similarity (Ingredient.similarity to compare to other Ingredients) [X]
-        -Type of ingredient: flour, sugar, shortening
-        -Essential ingredients vs mix-in (T/F) [X]
-    *Recipe
-        -Special naming function [X]
-            *pick from list of adjectives, pick one of the mix-ins, "cookies" [X]
-        
-        -Scores/weights
-        -Stick to basic recipe's cooking times/steps
-        -Keep instructions relatively constant
-        -Origin attribute: if Recipe has x Ingredients, then it's ____ origin
-            *incorporate to recipe title
-        -Normalize (take into account yield)
-        --> We could have a mutation function for each TYPE of base ingredient, keeping amounts constant
-                For example:
-                        * mutate_flour(flour_name) - swaps the given flour ingredient for another type of flour
-                                                    all purpose flour --> whole wheat flour
-                        * mutate_sugar(sugar) - swaps the sugar
-                        * mutate_shortening(short) - swaps the shortening
--Generation
-    -Dictionary? of ingredients and average amount <- just for essential ingredients
-        *check how far the amount is from the average
-
-Inspiring Set
-- look through recipes Harmon listed, create .txt files for them, add to input (start w 5)
-    -> web scrape eventually?
-    *use to find out basic ingredients of a cookie
-    *look for constants like time and temp for this week
-    *use grams
-
-Knowledge Base
--Ingredient pairing? (might be for next week)
--Base ingredients for every cookie, focus on mix-ins
-    *what mix-ins pair well with interesting essential ingredients (spices)
-    *consider all butters as a core ingredient
-    *numpy weights for delete/add mutations: get rid of worst pairing, add best pairing
-    *change amount just for mix-ins, having smaller amt of values an essential ingredient can change to
--Update mutations: look at input file to determine an appropriate range of flour, sugar
--List of adjectives for naming function
-
-Plan:
-Inspring Set of plain dough recipes
-randomly select a dough recipe and use its measurements
-randomly select the first mix in
-decide the future mix ins depending on flavor pairing
-
-TO DO LIST AS OF MARCH 10 --
-    - figure out categories to get rid of weird ingredients ( in flavor_pairing.py ) **
-        - can we add fun mixins to ingredient file? 
-    - edit input recipes so that ingredient names match flavor data set **
-    - (Not urgent, but should be done before submit code) clean up bugs and exception stuff  * 
-    (when are ingredients aren't in database --> how do we deal)
-    - (Not urgent): Generate some random recipes based using ingredient names from flavor data set so that
-        there are no conflicts in naming. Random recipes will have almost identical base ingredients but mix-ins
-        will vary
-
-EVALUATION
--similarity_fitness() is 1 form of evaluation
--recipe_uniqueness() is 2nd form of evaluation
-
-Week of 3/15 to do list
--recipe_uniqueness() [X]
-    *get more points based on uniqueness of an ingredient in the final recipe set
-    *1/occurnece of an ingredient
-        *cinnamon will have a lower score than matcha
--calculate_rank() function <- do this Generator [X]
-    *sum of uniqueness and similarity
-    *higher the value, higher the rank
-    *order based on value
-    *for an output of 10 recipes, ranks them #1, #2, #3 ... best recipe
-    *write as final line of recipe (after instructions) ---> ***** Do we need this **(* )
--fix the instructions to be more inclusive of mix-ins
-    *preheat
-    *dry ingredients
-    *wet ingredients
-    *bake
--going through inspring set to paraphrase ingredients for numpy 
--keep instructions from recipe that is being used as base in crossover
-
 TODO before Presentation:
     - Add an Evaluation method for the final output recipes (the best recipes produced by the system)
         * Generation and Evaluation are distinct 
@@ -113,26 +18,25 @@ TODO before Presentation:
         * Maybe do something with the ingredient amounts? Either as a fitness function or a form of evaluation
             - If a recipe has the same proportion of ingredients as a similar recipe in inspiring set then 
                 it's a better recipe
-    - fix documentation: [X]
-        * spacing 
-            - 2 lines between each function[X]
-        * __str__ and __repr__ functions for each class[X]
-        * docstrings for every class and method[X]
-        * .gitignore file [X]
-    - Update instructions in input .txt files using format in Google Doc [X]
-    - Exporting rankings and evaluations to separate 'metrics' file [X]
-        * All in one .txt file where each recipe and its ranking + score are all on one line, see format below
-        * Format: [ranking] [recipe name] [fitness score]/[uniqueness score]
-    - Run evaluation 5 times, and save the output recipes after each run [X]
-        * Can save the recipes manually or change the code 
-        * 5 different evaluation .txt files in metrics
-    - Choosing best cookie recipes out of the 5 sets output recipes [X]
     - Making best cookie recipe: Nicole!
 
 TODO as of 3/19
--Fixing amounts when adding an ingredient (spices should be lower) [X]
--Change naming so all 50 have different names (no Wild Oats Cookies repeats-Remixed?) [partially done]
 -Incorporating theory
+    *18 Criteria
+        *update metrics
+
+ Judge the artifacts produced by a system in terms of:
+● Typicality: Is the artifact a recognizable example of
+the target genre?
+● Novelty: How dissimilar is the artifact to existing
+examples (i.e., inspiring set) of its genre?
+● Quality: i.e., value
+
+ What proportion of the...
+● ...overall results are high quality?
+● ...overall results are novel and typical?
+● ....typical (or non-typical) results are high quality?
+● ...novel results are typical and high quality (i.e., demonstrate creativity within existing norms)?
 """
 
 
@@ -145,6 +49,7 @@ from bs4 import BeautifulSoup
 from flavor_pairing import similarity, pairing
 
 ESSENTIAL_INGREDIENTS = ["sugar", "butter", "flour", "egg", "eggs", "yolk", "yolks", "baking soda", "baking powder", "salt", "vanilla", "vegetable oil"]
+RECIPE_NAMES = dict()
 
 class Ingredient:
     def __init__(self, name, quantity, unit="grams", essential=False):
@@ -372,6 +277,12 @@ class Recipe:
             adjective = ''.join(random.choices(related_words, weights, k=1))
         name = f"{string.capwords(adjective)} {string.capwords(name_ingredient)} Cookies"
 
+        if name in RECIPE_NAMES:
+            RECIPE_NAMES[name] += 1
+            name += " " + str(RECIPE_NAMES[name])
+        else:
+            RECIPE_NAMES[name] = 1
+
         self.name = name
         return name
 
@@ -384,15 +295,6 @@ class Recipe:
         Return:
             None
         """
-        current_recipe_names = []
-        for filename in glob.glob("output/*"):
-            current_recipe_names.append(filename)
-
-        format_name = "output/" + self.name
-
-        if format_name in current_recipe_names:
-            self.name_recipe()
-
         output_path = os.path.join(output_dir, self.name)
         f = open(output_path, "w", encoding='utf-8')
 
