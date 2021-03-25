@@ -1,50 +1,52 @@
-1. Slender Cocoa Cookies, score: 35.71
-2. Pure Chocolate Cookies, score: 31.53
-3. More Ancient Dates Cookies, score: 30.43
-4. Simple Espresso Powder Cookies, score: 28.28
-5. Powdered Cinnamon Cookies, score: 26.89
-6. Unsalted Cream Cheese Cookies, score: 26.52
-7. Thick Maple Syrup Cookies, score: 26.47
-8. Simple Macadamia Nut Cookies, score: 25.97
-9. Scanty Oats Cookies, score: 25.56
-10. Single Raisin Cookies, score: 23.96
-11. Officinal Cardamom Cookies, score: 23.9
-12. Fried Zucchini Cookies, score: 23.56
-13. Canned Coconut Cookies, score: 23.08
-14. Extensive Cranberry Cookies, score: 22.12
-15. Powdered Cinnamon Cookies, score: 21.81
-16. Powdered Cardamom Cookies, score: 21.59
-17. Simple White Chocolate Chips Cookies, score: 21.47
-18. Simple White Chocolate Chips Cookies, score: 21.03
-19. Southern Molasses Cookies, score: 21.01
-20. Hot Chocolate Cookies, score: 20.61
-21. Bengal Cardamom Cookies, score: 20.01
-22. Wild Oats Cookies, score: 19.97
-23. Strong Peppermint Cookies, score: 19.41
-24. Simple Espresso Powder Cookies, score: 17.92
-25. Simple Maple Extract Cookies, score: 17.92
-26. Dark, Pickled Ginger Cookies, score: 17.92
-27. Wild Cardamom Cookies, score: 17.43
-28. Finest Raisin Cookies, score: 17.15
-29. Simple Roughly Chopped Oreos Cookies, score: 16.81
-30. Symbolic Nutmeg Cookies, score: 16.81
-31. Shredded Coconut Cookies, score: 16.53
-32. Sweet Coconut Cookies, score: 16.47
-33. Cold Zucchini Cookies, score: 16.45
-34. Proper Raisin Cookies, score: 16.39
-35. Fourth White Chocolate Cookies, score: 15.61
-36. Hopelessly Leaky Chocolate Cookies, score: 15.26
-37. Simple White Chocolate Chips Cookies, score: 15.15
-38. Bitter Chocolate Cookies, score: 14.9
-39. Simple White Chocolate Chips Cookies, score: 14.63
-40. Odd Cardamom Cookies, score: 14.63
-41. Sweet Maple Syrup Cookies, score: 14.6
-42. Golden Maple Syrup Cookies, score: 14.5
-43. Teaspoonful Cornstarch Cookies, score: 14.43
-44. Southern Pecan Cookies, score: 14.29
-45. Raw Cranberry Cookies, score: 14.21
-46. Successful Young Pecan Cookies, score: 14.21
-47. Instantaneous Chocolate Cookies, score: 13.87
-48. Fat Cinnamon Cookies, score: 13.75
-49. Lesser Cardamom Cookies, score: 13.67
-50. Simple Roughly Chopped Oreos Cookies, score: 13.5
+Average Combined Novelty and Quality Score: 17.16, Average Typicality Score: 26.13 
+ 
+1. Simple Espresso Powder Cookies, score: 26.17, typicality: 21.38 
+2. Tall Pecan Cookies, score: 26.16, typicality: 22.76 
+3. Teaspoonful Cinnamon Cookies, score: 25.6, typicality: 26.95 
+4. Wild Oats Cookies, score: 25.19, typicality: 20.35 
+5. Gaunt Cinnamon Cookies, score: 24.76, typicality: 21.41 
+6. Powdered Cinnamon Cookies 3, score: 23.88, typicality: 21.44 
+7. Wild Oats Cookies 2, score: 23.68, typicality: 21.94 
+8. Magnetic Cocoa Cookies, score: 22.24, typicality: 28.39 
+9. Mild Chocolate Cookies, score: 21.9, typicality: 24.4 
+10. Low-lying Pecan Cookies, score: 21.46, typicality: 24.33 
+11. Recent Dates Cookies, score: 21.34, typicality: 26.35 
+12. Simple Pumpkin Pie Spice Cookies 2, score: 19.96, typicality: 29.53 
+13. Wild Oats Cookies 3, score: 19.74, typicality: 28.82 
+14. Simple Mini M&ms Cookies 3, score: 19.7, typicality: 29.8 
+15. Withered Clove Cookies, score: 19.62, typicality: 24.29 
+16. Simple Pumpkin Pie Spice Cookies, score: 19.32, typicality: 32.12 
+17. Simple Mini M&ms Cookies, score: 19.13, typicality: 34.27 
+18. Powdered Cinnamon Cookies, score: 19.06, typicality: 22.4 
+19. Large Open Cocoa Cookies, score: 18.78, typicality: 29.94 
+20. Unripe Coconut Cookies, score: 18.59, typicality: 24.44 
+21. Simple Mini M&ms Cookies 4, score: 18.58, typicality: 17.12 
+22. Eastern Black Walnut Cookies, score: 18.02, typicality: 19.93 
+23. Chopped Clove Cookies, score: 17.82, typicality: 23.56 
+24. Powdered Cinnamon Cookies 2, score: 17.76, typicality: 25.71 
+25. Simple M&m's Cookies, score: 17.63, typicality: 25.62 
+26. Wild Cardamom Cookies, score: 17.59, typicality: 20.4 
+27. Simple M&m's Cookies 2, score: 16.64, typicality: 35.86 
+28. Bitter Pecan Cookies, score: 16.03, typicality: 31.38 
+29. Purple Ginger Cookies, score: 15.18, typicality: 22.27 
+30. Scorched Clove Cookies, score: 15.1, typicality: 31.5 
+31. Native Northern Pecan Cookies, score: 14.86, typicality: 25.0 
+32. Tall Coconut Cookies, score: 14.78, typicality: 29.94 
+33. Few Green Oats Cookies, score: 14.61, typicality: 24.14 
+34. Fat Pecan Cookies, score: 14.31, typicality: 23.87 
+35. Simple M&m's Cookies 3, score: 14.2, typicality: 24.87 
+36. White Clove Cookies, score: 14.16, typicality: 26.23 
+37. Aromatic Cinnamon Cookies, score: 13.81, typicality: 27.62 
+38. French Or Spanish Chocolate Cookies, score: 12.61, typicality: 31.23 
+39. Simple Mini M&ms Cookies 2, score: 12.52, typicality: 28.0 
+40. Sleek Chocolate Cookies, score: 12.3, typicality: 30.86 
+41. Simple Mini M&ms Cookies 5, score: 12.12, typicality: 28.43 
+42. Dark Chocolate Cookies, score: 12.06, typicality: 38.64 
+43. Southern Pecan Cookies, score: 12.03, typicality: 26.17 
+44. Australian Cardamom Cookies, score: 11.73, typicality: 22.69 
+45. Tempting Raisin Cookies, score: 11.36, typicality: 25.54 
+46. Ole Ginger Cookies, score: 11.25, typicality: 23.86 
+47. Astonishingly Substantial Oats Cookies, score: 11.08, typicality: 25.79 
+48. Powdered Cinnamon Cookies 4, score: 10.87, typicality: 17.54 
+49. Favorite Clove Cookies, score: 10.34, typicality: 27.67 
+50. Tawny Cinnamon Cookies, score: 10.17, typicality: 29.83 
