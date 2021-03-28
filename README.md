@@ -1,4 +1,4 @@
-# Smart Cookies
+# Cookie MONSTER (Machine for Obtaining Novel Smart Typical Evaluative Recipes)
 
 ## Description
 
