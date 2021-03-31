@@ -352,7 +352,7 @@ class Generator:
             with open(os.path.join(filename), encoding='utf-8') as f:
                 input_string = ""
                 for line in f.readlines():  # add each ingredient line in file to recipe
-                    if ("grams" in line):
+                    if "grams" in line:
                         # split line into list of form [quantity, ingredient]
                         split_line = line.rstrip().split(" grams ")
                         ingredient_name = split_line[1]
@@ -456,7 +456,7 @@ class Generator:
             if not ingredient.essential:
                 non_essentials.append(ingredient)
 
-        if (current_mutation == "add"):
+        if current_mutation == "add":
             # randomly ordered list of nonessentials
             random_order = random.choices(non_essentials, k=len(non_essentials))
             found_ingredient = False
