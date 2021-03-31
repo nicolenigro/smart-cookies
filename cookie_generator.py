@@ -104,15 +104,20 @@ class Recipe:
             fitness_score (int): the fitness score of a recipe
         """
         fitness_score = 0
-        non_essentials = self.get_non_essentials()
+        non_essentials = self.get_non_essentials() # gathering all non-essential or mix-in ingredients
 
+        # for every non-essential/mix-in ingredient 
         for i in range(len(non_essentials)):
             ingred1 = non_essentials[i].name
+            # compare the current mix-in ingredient to every other mix-in ingredient
+
             for j in range(i, len(non_essentials)):
                 ingred2 = non_essentials[j].name
                 try:
                     sim = similarity(ingred1, ingred2)
                 except:
+                    # ingredient isn't in numpy flavor profile dataset but it still comes from cookie inspiring
+                    # set so we still know that the ingredient will pair well with other cookie mix-ins
                     sim = 0.5
                 fitness_score += sim
 
@@ -232,7 +237,7 @@ class Recipe:
             name (str): Recipe name
         """
         non_essentials = self.get_non_essentials()
-        # if no non essential ingredients --> recipe is basic
+        # if there are no non-essential ingredients --> recipe is basic
         if len(non_essentials) == 0:
             name_ingredient = "Basic"
         else:
@@ -248,9 +253,12 @@ class Recipe:
             adjective = ''.join(random.choices(related_words, weights, k=1))
         name = f"{string.capwords(adjective)} {string.capwords(name_ingredient)} Cookies"
 
+        # if the generated name is already being used for a different recipe then we update the occurrence count for 
+        # that name and add the new count to the end of the generated name (ex. Simple Sugar Cookies 3)
         if name in RECIPE_NAMES:
             RECIPE_NAMES[name] += 1
             name += " " + str(RECIPE_NAMES[name])
+        # otherwise, make a new entry and count in the dictionary for the recipe name
         else:
             RECIPE_NAMES[name] = 1
 
@@ -267,18 +275,17 @@ class Recipe:
             None
         """
         output_path = os.path.join(output_dir, self.name)
-        f = open(output_path, "w", encoding='utf-8')
+        with open(output_path, "w", encoding='utf-8') as f:
 
-        # write each ingredient and quantity to line 
-        for ingredient in self.ingredients:
-            line = f"{round(ingredient.quantity,2)} grams {ingredient.name} \n"
-            f.write(line)
-        f.write("\n")
+            # write each ingredient and quantity to line 
+            for ingredient in self.ingredients:
+                line = f"{round(ingredient.quantity,2)} grams {ingredient.name} \n"
+                f.write(line)
+            f.write("\n")
 
-        # write instructions to file
-        f.write("Instructions")
-        f.write(self.instructions)
-        f.close()
+            # write instructions to file
+            f.write("Instructions")
+            f.write(self.instructions)
 
 
     def __str__(self):
@@ -340,36 +347,36 @@ class Generator:
         """
         for filename in glob.glob(input_directory):  # open each example recipe file
             ingredients = []  # intialize list of all ingredients in current recipe
-            f = open(os.path.join(filename), encoding='utf-8')
-
-            input_string = ""
-            for line in f.readlines():  # add each ingredient line in file to recipe
-                if ("grams" in line):
-                    # split line into list of form [quantity, ingredient]
-                    split_line = line.rstrip().split(" grams ")
-                    ingredient_name = split_line[1]
-                    ingredient_quantity = round(float(split_line[0]), 2)
-                    ingredient = Ingredient(name=ingredient_name, quantity=ingredient_quantity)
-                    ingredients.append(ingredient)
-                input_string += line
-
-                # update dictionary mapping ingredient occurence to counts
-                if ingredient_name not in self.ingredient_names:
-                    self.ingredient_names[ingredient_name] = 1
-                else: 
-                    self.ingredient_names[ingredient_name] += 1
             
-            split_input = input_string.split("Instructions")
-            instructions = split_input[1]
+            with open(os.path.join(filename), encoding='utf-8') as f:
+                input_string = ""
+                for line in f.readlines():  # add each ingredient line in file to recipe
+                    if ("grams" in line):
+                        # split line into list of form [quantity, ingredient]
+                        split_line = line.rstrip().split(" grams ")
+                        ingredient_name = split_line[1]
+                        ingredient_quantity = round(float(split_line[0]), 2)
+                        ingredient = Ingredient(name=ingredient_name, quantity=ingredient_quantity)
+                        ingredients.append(ingredient)
+                    input_string += line
 
-            # get rid of 'input' in filename
-            filename = filename.split('/')[1]
+                    # update dictionary mapping ingredient occurence to counts
+                    if ingredient_name not in self.ingredient_names:
+                        self.ingredient_names[ingredient_name] = 1
+                    else: 
+                        self.ingredient_names[ingredient_name] += 1
+                
+                split_input = input_string.split("Instructions")
+                instructions = split_input[1]
 
-            # create recipe with all ingredients in a file
-            recipe = Recipe(name=filename, ingredients=ingredients, instructions=instructions)
+                # get rid of 'input' in filename
+                filename = filename.split('/')[1]
 
-            # save recipe to the list of recipes
-            self.recipes.append(recipe)
+                # create recipe with all ingredients in a file
+                recipe = Recipe(name=filename, ingredients=ingredients, instructions=instructions)
+
+                # save recipe to the list of recipes
+                self.recipes.append(recipe)
 
 
     def crossover(self):
@@ -457,11 +464,12 @@ class Generator:
             for i in range(len(random_order)):
                 reference_ingredient = random_order[i]
                 try:
+                    # an ingredient needs to have a flavor pairing of 0.5 or higher to be considered a good pairing
                     good_pairings = pairing(reference_ingredient.name, 0.5)
                     good_ingredients, weights = good_pairings.items()
                     new_ingredient = random.choices(good_ingredients, weights=weights)
-                except:
-                    continue
+                except: 
+                    continue # ingredient wasn't in numpy file so we continue to the next ingredient
                 found_ingredient = True
                 break
             
@@ -469,23 +477,27 @@ class Generator:
             if not found_ingredient:
                 new_ingredient = random.choice(self.default_mix_ins)
 
+            # vanilla is a very common cookie recipe ingredient and serves as an excellent base for
+            # gathering all cookie ingredients in a particular category 
             all_spices = pairing("vanilla", 0.00, cat="spice")
             all_herbs = pairing("vanilla", 0.00, cat="herb")
             
+            # if the ingredient is a spice or herb, then it should be used in a smaller quantity (1-20 grams)
             if new_ingredient in all_spices or new_ingredient in all_herbs:
                 new_ingredient_amount = random.uniform(1, 20)
+            # otherwise, the ingredients isn't a spice or herb so we use normal quantities (10-100 grams)
             else:
                 new_ingredient_amount = random.uniform(10, 100)
                 
-
             recipe.add_ingredient(Ingredient(new_ingredient, round(new_ingredient_amount, 2)))
+            # end of 'add' ingredient mutation type
 
-        elif (current_mutation == "delete"):
+        elif current_mutation == "delete":
             # select random ingredient to remove from recipe
             ingredient_to_delete = random.choice(recipe.ingredients)
             recipe.delete_ingredient(ingredient_to_delete)
 
-        recipe.combine_duplicates() # combine any duplicates in recipe
+        recipe.combine_duplicates() # combine any duplicate ingredients in recipe and add their amounts
         return recipe
 
 
@@ -526,7 +538,7 @@ class Generator:
 
     def generate(self, num_generations, mutation_prob):
         """ 
-        Performs the genetic algorithm for num_generations and returns the final recipes generated. 
+        Performs the genetic algorithm (GA) for num_generations and returns the final recipes generated. 
         Args: 
             num_generations (int): number of new generations to be created before returning final recipe generation
             mutation_prob (float): the probability of mutation
@@ -536,6 +548,8 @@ class Generator:
         for i in range(num_generations):
             self.generate_population(mutation_prob)
             self.current_generation += 1
+
+        # the recipes returned are the most fit recipes after running the GA for num_generations
         return self.recipes
 
 
@@ -645,18 +659,17 @@ class Generator:
         ranked_recipes = sorted(recipes, key=lambda Recipe: Recipe.score, reverse=True)
         
         path = "metrics/" + "metrics" + ".txt"
-        f = open(path, "w", encoding='utf-8')
+        with open(path, "w", encoding='utf-8') as f:
 
-        avg_quality = np.mean([recipe.score for recipe in recipes])
-        avg_typicality = np.mean([recipe.typicality for recipe in recipes])
-        f.write(f"Average Combined Novelty and Quality Score: {str(round(avg_quality, 2))}, Average Typicality Score: {str(round(avg_typicality, 2))} \n \n")
-        
-        counter = 1
-        for recipe in ranked_recipes:
-            formatted_recipe = f"{str(counter)}. {recipe.name}, score: {str(round(recipe.score, 2))}, typicality: {str(round(recipe.typicality, 2))} \n"
-            f.write(formatted_recipe)
-            counter += 1
-        f.close()
+            avg_quality = np.mean([recipe.score for recipe in recipes])
+            avg_typicality = np.mean([recipe.typicality for recipe in recipes])
+            f.write(f"Average Combined Novelty and Quality Score: {str(round(avg_quality, 2))}, Average Typicality Score: {str(round(avg_typicality, 2))} \n \n")
+            
+            counter = 1
+            for recipe in ranked_recipes:
+                formatted_recipe = f"{str(counter)}. {recipe.name}, score: {str(round(recipe.score, 2))}, typicality: {str(round(recipe.typicality, 2))} \n"
+                f.write(formatted_recipe)
+                counter += 1
 
 
     def __str__(self): 
@@ -679,6 +692,7 @@ class Generator:
             output (str): The string representing Generator object
         """
         return f"Generator({self.recipe_type})"      
+
 
 
 def main():
