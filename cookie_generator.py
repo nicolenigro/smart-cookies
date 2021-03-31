@@ -2,7 +2,7 @@
 PQ2: Smart Cookies
 CSCI 3725
 Team OOG: Ahmed Hameed, Adrienne Miller, Nicole Nigro
-Version Date: 3/26/21
+Version Date: 3/30/21
 
 Description: This system uses a modified genetic algorithm to generate, output, and evaluate cookie recipes. 
 
@@ -17,7 +17,8 @@ from bs4 import BeautifulSoup
 
 from flavor_pairing import similarity, pairing
 
-ESSENTIAL_INGREDIENTS = ["all-purpose flour", "sugar", "butter", "flour", "egg", "eggs", "yolk", "yolks", "baking soda", "baking powder", "salt", "vanilla", "vegetable oil"]
+ESSENTIAL_INGREDIENTS = ["all-purpose flour", "sugar", "butter", "flour", "egg", "eggs", "yolk", "yolks", "baking soda", \
+    "baking powder", "salt", "vanilla", "vegetable oil"]
 RECIPE_NAMES = dict()
 
 class Ingredient:
